@@ -72,81 +72,88 @@
 <div class="excel-grid">
     <div class="header-row" style="margin-top:0;">Required Inputs</div>
     
-    <label for="B3">Load Factor (B3)</label>
-    <input type="number" id="B3" class="input-cell" value="10" oninput="calc()">
+    <label for="B3"> Powder Density ( For Calculations A , B , C ) (B3)</label>
+    <input type="number" id="B3" class="input-cell" value="2.613" oninput="calc()">
 
-    <label for="B5">Safety Factor (B5)</label>
-    <input type="number" id="B5" class="input-cell" value="2" oninput="calc()">
+    <label for="B5"> Target Litre Weight ( For Calculations A , B ,C ) (B5)</label>
+    <input type="number" id="B5" class="input-cell" value="1.800" oninput="calc()">
 
-    <label for="B8">Base Force (B8)</label>
-    <input type="number" id="B8" class="input-cell" value="50" oninput="calc()">
+    <label for="B8"> Kilos of POWDER Already Weighed (B8)</label>
+    <input type="number" id="B8" class="input-cell" value="1.296" oninput="calc()">
 
-    <label for="B9">Friction (B9)</label>
-    <input type="number" id="B9" class="input-cell" value="5" oninput="calc()">
+    <label for="B13"> Litres Of Casting Slip/Glaze Required (B13)</label>
+    <input type="number" id="B13" class="input-cell" value="10.000" oninput="calc()">
 
-    <label for="B13">External Force (B13)</label>
-    <input type="number" id="B13" class="input-cell" value="20" oninput="calc()">
+    <label for="B18"> Kilos of Casting Slip or Glaze (B18)</label>
+    <input type="number" id="B18" class="input-cell" value="10.000" oninput="calc()">
 
-    <label for="B14">Opposing Force (B14)</label>
-    <input type="number" id="B14" class="input-cell" value="10" oninput="calc()">
-
-    <label for="B18">Mass (B18)</label>
-    <input type="number" id="B18" class="input-cell" value="100" oninput="calc()">
-
-    <label for="B19">Volume (B19)</label>
-    <input type="number" id="B19" class="input-cell" value="10" oninput="calc()">
+    <label for="B19"> Litres Weight Measured (B19)</label>
+    <input type="number" id="B19" class="input-cell" value="1.7" oninput="calc()">
 
     <div class="header-row">Calculation Results</div>
 
+    
     <!-- Group 1 -->
-    <label>Force/Load Ratio (B10)</label>
+    <div class="header-row">Calculation A</div>
+    <div class="header-row">Water Needed For Given Powder Weight</div>
+
+    Water Needed For Given Powder Weight
+    <label> Litres Weight Measured (B9)</label>
+    <div id="B9" class="output-cell"></div>
+
+    <label> Litres of Casting Slip or Glaze (B10)</label>
     <div id="B10" class="output-cell"></div>
 
-    <label>Efficiency Ratio (B11)</label>
-    <div id="B11" class="output-cell"></div>
-
+    
     <!-- Group 2 -->
-    <label>Adjusted External (B15)</label>
+    <div class="header-row">Calculation B</div>
+    <div class="header-row">Water & Powder Needed For Given Volume</div>
+    
+    <label> Kilos of POWDER to Mix (B14)</label>
+    <div id="B14" class="output-cell"></div>
+
+    <label> Kilos of WATER to Mix (B15)</label>
     <div id="B15" class="output-cell"></div>
 
-    <label>Net Force (B16)</label>
-    <div id="B16" class="output-cell"></div>
-
+    
     <!-- Group 3 (The complex sequence) -->
-    <label>Ratio Calculation (B21)</label>
+    <div class="header-row">Calculation C</div>
+    <div class="header-row">Calculation For NEW Target Litre Weight</div>
+    
+    <label> Water to Add or Remove (B21)</label>
     <div id="B21" class="output-cell"></div>
 
-    <label>Final Load Ratio (B22)</label>
+    <label> Total Weight of Powder in Slurry(B22)</label>
     <div id="B22" class="output-cell"></div>
 
-    <label>B30 Check (B30)</label>
-    <div id="B30" class="output-cell"></div>
+    <label> Total Weight of Water in Slurry (B23)</label>
+    <div id="23" class="output-cell"></div>
 
-    <label>Net Difference (B23)</label>
-    <div id="B23" class="output-cell"></div>
-
-    <label>Total Load (B24)</label>
+    <label> Total Weight of Powder + Water in Slurry (B24)</label>
     <div id="B24" class="output-cell"></div>
 
-    <label>Average per Factor (B25)</label>
+    <label> Litres of Casting Slip or Glaze (B25)</label>
     <div id="B25" class="output-cell"></div>
 
-    <div class="header-row">Advanced Multi-Factor</div>
-
-    <label>Factor Shift (B27)</label>
+    
+    <div class="header-row">""</div>
+    
+    
+    <label> Powder to Add or Remove (B27)</label>
     <div id="B27" class="output-cell"></div>
 
-    <label>Combined Factor (B28)</label>
+    <label> Total Weight of Powder in Slurry (B28)</label>
     <div id="B28" class="output-cell"></div>
 
-    <label>Shift Variance (B29)</label>
+    <label> Total Weight of Water in Slurry (B29)</label>
     <div id="B29" class="output-cell"></div>
 
-    <label>Weighted Sum (B31)</label>
+    <label> Total Weight of Powder + Water in Slurry (B30)</label>
+    <div id="B30" class="output-cell"></div>
+
+    <label> Litres of Casting Slip or Glaze (B31)</label>
     <div id="B31" class="output-cell"></div>
 
-    <label>Weighted Average (B32)</label>
-    <div id="B32" class="output-cell"></div>
 </div>
 
 <script>
@@ -160,43 +167,43 @@ function calc() {
 
     const B3 = get('B3');
     const B5 = get('B5');
+    
     const B8 = get('B8');
-    const B9 = get('B9');
+    
     const B13 = get('B13');
-    const B14 = get('B14');
+    
     const B18 = get('B18');
     const B19 = get('B19');
 
-    // 2. Apply Formulas
-    const B10 = (B3 > 0 && B5 !== 1) ? (B8/B3)*(B3-B5)/(B5-1) : "N/A";
-    const B11 = (B3 > 0) ? (B8+B9)/B3 : "N/A";
-    
-    const B15 = (B3 > 0 && B3 !== 1) ? B13*(B5-1)*(B3/(B3-1)) : "N/A";
-    const B16 = (B3 > 0) ? (B13*B5)-B14 : "N/A";
+    // 1. Calculation A Formulas
+    const B9 = (B3 > 0) ? (B8/B3)*(B3-B5)/(B5-1) : "N/A";
+    const B10 = (B3 > 0) ? (B8+B9)/B3 : "N/A";
 
-    // Group 3 formulas
-    const B21 = (B19 !== 0 && B5 !== 1) ? (B18/B19)*(B19-B5)/(B5-1) : 0;
-    const B22 = (B3 > 0 && B3 !== 1 && B19 !== 0) ? (B18/B19)(B19-1)(B3/(B3-1)) : "N/A";
     
-    // Formula B30 depends on B18, B19, B3, B5
-    const B30 = (B3 > 0 && B19 !== B3) ? (B18/B19)B3(B19-B5)/(B5-B3) : "N/A";
-    
-    const B23 = (B3 > 0 && typeof B22 === 'number') ? B22 - B21 : "N/A"; // B24-B22 in your list, but B22/B21 context
+    //2. Calculation B formulas
+    const B14 = (B3 > 0) ? B13*(B5-1)*(B3/(B3-1)) : "N/A";
+    const B15 = (B3 > 0) ? (B13*B5)-B14 : "N/A";
+
+    //3.1 Calculation C formulas
+    const B21 = (B18/B19)*(B19-B5)/(B5-1);
+    const B22 = (B3 > 0) ? (B18/B19)*(B19-1)*(B3/(B3-1)) : "N/A";
+    const B23 = (B3 > 0) ? B24 - B22 : "N/A";
     const B24 = B18 + B21;
     const B25 = B24 / B5;
-
-    // Advanced Group
-    const B27 = (B3 > 0 && B19 !== B3) ? (B18/B19)B3(B19-B5)/(B5-B3) : "N/A";
-    const B28 = (B3 > 0 && typeof B27 === 'number') ? B21 + B27 : "N/A";
-    const B29 = (B3 > 0 && typeof B28 === 'number' && typeof B30 === 'number') ? B30 - B28 : "N/A";
-    const B31 = (B3 > 0 && typeof B27 === 'number') ? B18 + B27 : "N/A";
-    const B32 = (B3 > 0 && typeof B30 === 'number') ? B30 / B5 : "N/A";
+    
+    //3.2 Calculation C formulas
+    const B27 = (B3 > 0) ? (B18/B19)*B3*(B19-B5)/(B5-B3) : "N/A";
+    const B28 = (B3 >) ? B22 + B27 : "N/A";
+    const B29 = (B3 > 0) ? B30 - B28 : "N/A";
+    const B31 = (B3 > 0) ? B18 + B27 : "N/A";
+    const B32 = (B3 > 0) ? B30 / B5 : "N/A";
 
     // 3. Update UI
-    set('B10', B10); set('B11', B11); set('B15', B15); set('B16', B16);
-    set('B21', B21); set('B22', B22); set('B23', B23); set('B24', B24);
-    set('B25', B25); set('B27', B27); set('B28', B28); set('B29', B29);
-    set('B30', B30); set('B31', B31); set('B32', B32);
+    
+    set('B9', B9);set('B10', B10); 
+    set('B14', B14); set('B15', B15);
+    set('B21', B21); set('B22', B22); set('B23', B23); set('B24', B24); set('B25', B25); 
+    set('B27', B27); set('B28', B28); set('B29', B29); set('B30', B30); set('B31', B31);
 }
 
 // Run immediately
@@ -206,4 +213,5 @@ calc();
 </body>
 
 </html>
+
 
