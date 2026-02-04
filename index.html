@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!-- index.html -->
-<!--Three calculators together ... A) Water needed for given powder weight. B) Water and powder needed for given volume, C) Calculation for new liter weight. -->
+<!-- Three calculators together ... A) Water needed for given powder weight. B) Water and powder needed for given volume, C) Calculation for new liter weight. -->
 
 <html lang="en">
 <head>
@@ -97,7 +97,6 @@
     <div class="header-row">Calculation A</div>
     <div class="header-row">Water Needed For Given Powder Weight</div>
 
-    Water Needed For Given Powder Weight
     <label> Litres Weight Measured (B9)</label>
     <div id="B9" class="output-cell"></div>
 
@@ -176,31 +175,31 @@ function calc() {
     const B19 = get('B19');
 
     // 1. Calculation A Formulas
-    const B9 = (B3 > 0) ? (B8/B3)*(B3-B5)/(B5-1) : "N/A";
-    const B10 = (B3 > 0) ? (B8+B9)/B3 : "N/A";
+    const B9 = (B3 > 0) ? (B8 / B3) * (B3 - B5)/(B5 - 1) : "N/A";
+    const B10 = (B3 > 0) ? (B8 + B9) / B3 : "N/A";
 
     
     //2. Calculation B formulas
-    const B14 = (B3 > 0) ? B13*(B5-1)*(B3/(B3-1)) : "N/A";
-    const B15 = (B3 > 0) ? (B13*B5)-B14 : "N/A";
+    const B14 = (B3 > 0) ? B13 * (B5 - 1) * (B3 / (B3 - 1)) : "N/A";
+    const B15 = (B3 > 0) ? (B13 * B5) - B14 : "N/A";
 
     //3.1 Calculation C formulas
-    const B21 = (B18/B19)*(B19-B5)/(B5-1);
-    const B22 = (B3 > 0) ? (B18/B19)*(B19-1)*(B3/(B3-1)) : "N/A";
+    const B21 = (B18 / B19) * (B19 - B5) / (B5-1);
+    const B22 = (B3 > 0) ? (B18 / B19) * ( B19 - 1) * ( B3 / ( B3 - 1)) : "N/A";
     const B23 = (B3 > 0) ? B24 - B22 : "N/A";
     const B24 = B18 + B21;
     const B25 = B24 / B5;
     
     //3.2 Calculation C formulas
-    const B27 = (B3 > 0) ? (B18/B19)*B3*(B19-B5)/(B5-B3) : "N/A";
-    const B28 = (B3 >) ? B22 + B27 : "N/A";
+    const B27 = (B3 > 0) ? (B18 / B19) * B3 * (B19 - B5) / (B5 - B3) : "N/A";
+    const B28 = (B3 > 0) ? B22 + B27 : "N/A";
     const B29 = (B3 > 0) ? B30 - B28 : "N/A";
     const B31 = (B3 > 0) ? B18 + B27 : "N/A";
     const B32 = (B3 > 0) ? B30 / B5 : "N/A";
 
     // 3. Update UI
     
-    set('B9', B9);set('B10', B10); 
+    set('B9', B9); set('B10', B10); 
     set('B14', B14); set('B15', B15);
     set('B21', B21); set('B22', B22); set('B23', B23); set('B24', B24); set('B25', B25); 
     set('B27', B27); set('B28', B28); set('B29', B29); set('B30', B30); set('B31', B31);
@@ -213,5 +212,6 @@ calc();
 </body>
 
 </html>
+
 
 
