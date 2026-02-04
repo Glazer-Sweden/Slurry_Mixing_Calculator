@@ -126,7 +126,7 @@
     <div id="B22" class="output-cell"></div>
 
     <label> Total Weight of Water in Slurry (B23)</label>
-    <div id="23" class="output-cell"></div>
+    <div id="B23" class="output-cell"></div>
 
     <label> Total Weight of Powder + Water in Slurry (B24)</label>
     <div id="B24" class="output-cell"></div>
@@ -135,7 +135,7 @@
     <div id="B25" class="output-cell"></div>
 
     
-    <div class="header-row">""</div>
+    <div class="header-row"></div>
     
     
     <label> Powder to Add or Remove (B27)</label>
@@ -157,51 +157,85 @@
 
 <script>
 function calc() {
-    // 1. Get Inputs
-    const get = (id) => parseFloat(document.getElementById(id).value) || 0;
+    // helpers
+    const get = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return 0;
+        const v = parseFloat(el.value);
+        return (isFinite(v) ? v : 0);
+    };
     const set = (id, val) => {
         const el = document.getElementById(id);
-        el.innerText = (typeof val === 'number' && isFinite(val)) ? val.toFixed(3) : val;
+        if (!el) return;
+        if (typeof val === 'number') {
+            if (!isFinite(val)) el.innerText = 'N/A';
+            else el.innerText = val.toFixed(3);
+        } else {
+            el.innerText = val;
+        }
     };
 
-    const B3 = get('B3');
-    const B5 = get('B5');
-    
-    const B8 = get('B8');
-    
-    const B13 = get('B13');
-    
-    const B18 = get('B18');
-    const B19 = get('B19');
+    // Inputs
+    const B3 = get('B3'); // Powder density
+    const B5 = get('B5'); // Target litre weight
+    const B8 = get('B8'); // Kilos powder already weighed
+    const B13 = get('B13'); // Litres required
+    const B18 = get('B18'); // Kilos casting slip or glaze
+    const B19 = get('B19'); // Litres weight measured
 
-    // 1. Calculation A Formulas
-    const B9 = (B3 > 0) ? (B8 / B3) * (B3 - B5)/(B5 - 1) : "N/A";
-    const B10 = (B3 > 0) ? (B8 + B9) / B3 : "N/A";
+    // Calculation A
+    let B9 = "N/A", B10 = "N/A";
+    if (B3 > 0 && (B5 - 1) !== 0) {
+        B9 = (B8 / B3) * ((B3 - B5) / (B5 - 1));
+        B10 = (B8 + B9) / B3;
+    }
 
-    
-    //2. Calculation B formulas
-    const B14 = (B3 > 0) ? B13 * (B5 - 1) * (B3 / (B3 - 1)) : "N/A";
-    const B15 = (B3 > 0) ? (B13 * B5) - B14 : "N/A";
+    // Calculation B
+    let B14 = "N/A", B15 = "N/A";
+    if (B3 > 1) { // need B3 - 1 != 0
+        B14 = B13 * (B5 - 1) * (B3 / (B3 - 1));
+        B15 = (B13 * B5) - B14;
+    }
 
-    //3.1 Calculation C formulas
-    const B21 = (B18 / B19) * (B19 - B5) / (B5-1);
-    const B22 = (B3 > 0) ? (B18 / B19) * ( B19 - 1) * ( B3 / ( B3 - 1)) : "N/A";
-    const B23 = (B3 > 0) ? B24 - B22 : "N/A";
-    const B24 = B18 + B21;
-    const B25 = B24 / B5;
-    
-    //3.2 Calculation C formulas
-    const B27 = (B3 > 0) ? (B18 / B19) * B3 * (B19 - B5) / (B5 - B3) : "N/A";
-    const B28 = (B3 > 0) ? B22 + B27 : "N/A";
-    const B29 = (B3 > 0) ? B30 - B28 : "N/A";
-    const B31 = (B3 > 0) ? B18 + B27 : "N/A";
-    const B32 = (B3 > 0) ? B30 / B5 : "N/A";
+    // Calculation C - water change first (B21..B25)
+    // compute in safe order: B21 -> B24 -> B22 -> B23 -> B25
+    let B21 = "N/A", B22 = "N/A", B23 = "N/A", B24 = "N/A", B25 = "N/A";
+    if (B19 !== 0 && (B5 - 1) !== 0) {
+        // water to add/remove
+        B21 = (B18 / B19) * (B19 - B5) / (B5 - 1);
+        B24 = B18 + B21; // total weight after water change
+        if (B3 > 1) {
+            B22 = (B18 / B19) * (B19 - 1) * (B3 / (B3 - 1));
+            // water in slurry is total minus powder
+            B23 = (typeof B24 === 'number' && typeof B22 === 'number') ? (B24 - B22) : "N/A";
+        }
+        B25 = (typeof B24 === 'number' && B5 !== 0) ? (B24 / B5) : "N/A";
+    }
 
-    // 3. Update UI
-    
-    set('B9', B9); set('B10', B10); 
+    // Calculation C - powder adjustment (B27..B31)
+    // compute powder to add/remove (B27) then totals (B28..B31/B30)
+    let B27 = "N/A", B28 = "N/A", B29 = "N/A", B30 = "N/A", B31 = "N/A";
+    if (B3 > 0 && B19 !== 0 && (B5 - B3) !== 0) {
+        B27 = (B18 / B19) * B3 * (B19 - B5) / (B5 - B3);
+        if (typeof B22 === 'number') {
+            B28 = B22 + B27; // new powder total
+        }
+        // define B30 as previous total (B24) plus powder change B27 (reasonable assumption)
+        if (typeof B24 === 'number' && typeof B27 === 'number') {
+            B30 = B24 + B27;
+            if (typeof B28 === 'number') {
+                B29 = B30 - B28; // water becomes total minus powder
+            } else {
+                B29 = "N/A";
+            }
+            B31 = B18 + B27; // maybe total kilos after powder change (matches original)
+        }
+    }
+
+    // Update UI
+    set('B9', B9); set('B10', B10);
     set('B14', B14); set('B15', B15);
-    set('B21', B21); set('B22', B22); set('B23', B23); set('B24', B24); set('B25', B25); 
+    set('B21', B21); set('B22', B22); set('B23', B23); set('B24', B24); set('B25', B25);
     set('B27', B27); set('B28', B28); set('B29', B29); set('B30', B30); set('B31', B31);
 }
 
@@ -212,6 +246,3 @@ calc();
 </body>
 
 </html>
-
-
-
