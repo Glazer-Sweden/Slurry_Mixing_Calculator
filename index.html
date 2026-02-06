@@ -6,43 +6,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
     <title>Calculation Sheet</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f9; padding: 20px; }
+
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f9; padding: 1px; colour:black; }
         
         .excel-grid {
             display: grid;
             /* Column A (Label) | Column B (Value) */
-            grid-template-columns: 320px 140px;
-            gap: 6px 20px;
+            /*grid-template-columns: 320px 140px;*/
+            grid-template-columns: 300px 100px;
+           /* gap: 6px 20px;*/
+            gap: 1px 1px;
             align-items: center;
             max-width: 550px;
             background: white;
-            padding: 25px;
+            /*padding: 25px;*/
+            padding: 1px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            /*box-shadow: 0 4px 15px rgba(0,0,0,0.1);*/
         }
 
-        .header-row {
+        .header-row1 {
             grid-column: 1 / span 2;
-            background: #2c3e50;
-            color: white;
-            padding: 8px 12px;
-            font-size: 12px;
-            text-transform: uppercase;
+            background: lightgreen;
+            color: black;
+            padding: 4px 6px;
+            font-size: 15px;
+         /* text-transform: uppercase; */
             letter-spacing: 1px;
-            margin-top: 15px;
-            border-radius: 4px;
+            margin-top: 5px;
+            margin-bottom: 0px;
+            border-radius: 8px;
+            text-align:center;
+            font-weight:bold;
         }
 
-        label { font-size: 14px; color: #444; font-weight: 500; }
+       .header-row2 {
+            grid-column: 1 / span 2;
+            background: orange;
+            color: black;
+            padding: 1px 1px;
+            font-size: 16px;
+         /* text-transform: uppercase; */
+            letter-spacing: 1px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            border-radius: 8px;
+	    border-bottom:1px;
+            text-align:center;
+            font-weight:bold;
+        }
+
+       .header-row3 {
+            grid-column: 1 / span 2;
+            background: orange;
+            color: black;
+            padding: 1px 1px;
+            font-size: 14 px;
+         /* text-transform: uppercase; */
+            letter-spacing: 1px;
+            margin-top: 0px;
+            border-radius: 8px;
+            text-align:center;
+            font-weight:bold;
+        }
+
+        label { 
+	font-size: 14px;
+	color: black; 
+	background: #99feff;
+	 padding: 1px 5px;
+         text-align: left;
+         border: 1px 1px;
+         border-radius: 8px;
+	}
+
+        label_input {
+        font-size: 14px;
+        color: black;
+        font-weight: bold;
+        background:yellow; 
+        padding: 1px 5px;
+        text-align: left;
+        border: 1px 1px;
+        border-radius: 8px;
+        font-size: 14px;
+        }
+
+    	label_adjust {
+ 	font-size: 14px;
+	color: black;
+	font-weight: bold;
+	background: lightgreen;
+	padding: 1px 5px;
+        text-align: left;
+        border: 1px 1px;
+        border-radius: 8px;
+        font-size: 14px;
+
+        }
 
         /* YELLOW INPUT CELLS (Column B) */
         .input-cell {
             background-color: #ffffcc;
             border: 1px solid #ccc;
-            padding: 6px 10px;
+            padding: 1px 5px;
             text-align: right;
+            border: 1px 1px;
             border-radius: 4px;
             font-size: 14px;
             outline: none;
@@ -53,109 +125,142 @@
         .output-cell {
             background-color: #f1f3f5;
             border: 1px solid #dee2e6;
-            padding: 6px 10px;
+            padding: 1px 5px;
             text-align: right;
             border-radius: 4px;
-            font-weight: bold;
             font-size: 14px;
-            color: #2c3e50;
+            color: black;
             min-height: 1.2em;
         }
 
         /* Hide arrows on number inputs */
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type="number"] { -moz-appearance: textfield; }
-    </style>
+        /*input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }*/
+                               
+ </style>
+
 </head>
 <body>
 
 <div class="excel-grid">
-    <div class="header-row" style="margin-top:0;">Required Inputs</div>
+    <div class="header-row1" style="margin-top:0;">Edit Numbers in Yellow Cells - KILOS</div>
     
-    <label for="B3"> Powder Density ( For Calculations A , B , C ) (B3)</label>
-    <input type="number" id="B3" class="input-cell" value="2.613" oninput="calc()">
+    <label_input for="B3"> Powder Density (Calculations A , B , C )</label_input>
+    <input type="text" inputmode="decimal" class="input-cell comma-convert" id="B3" value="2.613" oninput="calc()">
 
-    <label for="B5"> Target Litre Weight ( For Calculations A , B ,C ) (B5)</label>
-    <input type="number" id="B5" class="input-cell" value="1.800" oninput="calc()">
+    <label_input for="B5"> Target Litre Weight (Calculations A , B ,C )</label_input>
+    <input type="text" inputmode="decimal"  class="input-cell comma-convert" id="B5" value="1.800" oninput="calc()">
+   
+    <!-- Calculation A -->
+    <div class="header-row2">Calculation A</div>
+    <div class="header-row3">Water Needed For Given Powder Weight</div>
 
-    <label for="B8"> Kilos of POWDER Already Weighed (B8)</label>
-    <input type="number" id="B8" class="input-cell" value="1.296" oninput="calc()">
-
-    <label for="B13"> Litres Of Casting Slip/Glaze Required (B13)</label>
-    <input type="number" id="B13" class="input-cell" value="10.000" oninput="calc()">
-
-    <label for="B18"> Kilos of Casting Slip or Glaze (B18)</label>
-    <input type="number" id="B18" class="input-cell" value="10.000" oninput="calc()">
-
-    <label for="B19"> Litres Weight Measured (B19)</label>
-    <input type="number" id="B19" class="input-cell" value="1.7" oninput="calc()">
-
-    <div class="header-row">Calculation Results</div>
-
+    <label_input for="B8"> Kilos of POWDER Already Weighed</label_input>
+    <input type="text" inputmode="decimal" class="input-cell comma-convert" id="B8" value="1.296" oninput="calc()">
     
-    <!-- Group 1 -->
-    <div class="header-row">Calculation A</div>
-    <div class="header-row">Water Needed For Given Powder Weight</div>
+    <label_adjust> Kilos of WATER to Mix</label_adjust>
+    <div id="B9" class="output-cell" style="font-weight: bold;">0.504</div>
 
-    <label> Litres Weight Measured (B9)</label>
-    <div id="B9" class="output-cell"></div>
-
-    <label> Litres of Casting Slip or Glaze (B10)</label>
+    <label> Litres of Casting Slip or Glaze</label>
     <div id="B10" class="output-cell"></div>
 
-    
-    <!-- Group 2 -->
-    <div class="header-row">Calculation B</div>
-    <div class="header-row">Water & Powder Needed For Given Volume</div>
-    
-    <label> Kilos of POWDER to Mix (B14)</label>
-    <div id="B14" class="output-cell"></div>
+    <!-- Calculation B -->
+    <div class="header-row2">Calculation B</div>
+    <div class="header-row3">Water & Powder Needed For Given Volume</div>
 
-    <label> Kilos of WATER to Mix (B15)</label>
-    <div id="B15" class="output-cell"></div>
-
+    <label_input for="B13"> Litres Of Casting Slip/Glaze Required</label_input>
+    <input type="text" inputmode="decimal" class="input-cell comma-convert" id="B13" value="10.000" oninput="calc()">    
     
-    <!-- Group 3 (The complex sequence) -->
-    <div class="header-row">Calculation C</div>
-    <div class="header-row">Calculation For NEW Target Litre Weight</div>
-    
-    <label> Water to Add or Remove (B21)</label>
-    <div id="B21" class="output-cell"></div>
+    <label_adjust> Kilos of POWDER to Mix</label_adjust>
+    <div id="B14" class="output-cell" style="font-weight: bold;"></div>
 
-    <label> Total Weight of Powder in Slurry(B22)</label>
+    <label_adjust> Kilos of WATER to Mix</label_adjust>
+    <div id="B15" class="output-cell" style="font-weight: bold;"></div>
+
+    <!-- Calculation C - Inputs -->
+    <div class="header-row2">Calculation C</div>
+    <div class="header-row3">Calculation For NEW Target Litre Weight</div>
+
+    <label_input for="B18"> Kilos of Casting Slip or Glaze</label_input>
+    <input type="text" inputmode="decimal" class="input-cell comma-convert" id="B18" value="10.000" oninput="calc()">
+
+    <label_input for="B19"> Litres Weight Measured</label_input>
+    <input type="text" inputmode="decimal" class="input-cell comma-convert" id="B19" value="1.7" oninput="calc()">
+
+    <!-- Calculation C - Outputs 1 -->
+    
+    <label_adjust> Water to Add or Remove</label_adjust>
+    <div id="B21" class="output-cell" style="font-weight: bold;"></div>
+
+    <label> Total Weight of Powder in Slurry</label>
     <div id="B22" class="output-cell"></div>
 
-    <label> Total Weight of Water in Slurry (B23)</label>
+    <label> Total Weight of Water in Slurry</label>
     <div id="B23" class="output-cell"></div>
 
-    <label> Total Weight of Powder + Water in Slurry (B24)</label>
+    <label> Total Weight of Powder + Water in Slurry</label>
     <div id="B24" class="output-cell"></div>
 
-    <label> Litres of Casting Slip or Glaze (B25)</label>
+    <label> Litres of Casting Slip or Glaze</label>
     <div id="B25" class="output-cell"></div>
 
-    
-    <div class="header-row"></div>
-    
-    
-    <label> Powder to Add or Remove (B27)</label>
-    <div id="B27" class="output-cell"></div>
+    <div class="header-row2"> </div>
 
-    <label> Total Weight of Powder in Slurry (B28)</label>
+    <!-- Calculation C - Outputs 2 -->    
+    
+    <label_adjust> Powder to Add or Remove</label_adjust>
+    <div id="B27" class="output-cell" style="font-weight: bold;"></div>
+
+    <label> Total Weight of Powder in Slurry</label>
     <div id="B28" class="output-cell"></div>
 
-    <label> Total Weight of Water in Slurry (B29)</label>
+    <label> Total Weight of Water in Slurry</label>
     <div id="B29" class="output-cell"></div>
 
-    <label> Total Weight of Powder + Water in Slurry (B30)</label>
+    <label> Total Weight of Powder + Water in Slurry</label>
     <div id="B30" class="output-cell"></div>
 
-    <label> Litres of Casting Slip or Glaze (B31)</label>
+    <label> Litres of Casting Slip or Glaze</label>
     <div id="B31" class="output-cell"></div>
 
+   <div class="header-row1" style="
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    font-weight: normal;
+">
+    nicholas.glazer@gmail.com<br>
+    Grad. I. Ceram ... IoM3<br>
+    WhatsApp: +46 739 315 028
 </div>
 
 <script>
+
+// Attach one listener to the entire document
+document.addEventListener('keydown', function(e) {
+  // 1. Check if the active element has your specific class
+  if (e.target && e.target.classList.contains('comma-convert')) {
+    
+    // 2. Detect if the comma key (188) or numpad comma (110) was pressed
+    if (e.key === ',' || e.keyCode === 188 || e.keyCode === 110) {
+      
+      // 3. Prevent the comma from being typed
+      e.preventDefault();
+      
+      // 4. Manually insert a dot at the current cursor position
+      const start = e.target.selectionStart;
+      const end = e.target.selectionEnd;
+      const value = e.target.value;
+
+      e.target.value = value.slice(0, start) + "." + value.slice(end);
+
+      // 5. Put the cursor back in the correct spot (after the new dot)
+      e.target.selectionStart = e.target.selectionEnd = start + 1;
+    }
+  }
+})
+    
 function calc() {
     // helpers
     const get = (id) => {
@@ -213,7 +318,7 @@ function calc() {
     }
 
     // Calculation C - powder adjustment (B27..B31)
-    // compute powder to add/remove (B27) then totals (B28..B31/B30)
+   
     let B27 = "N/A", B28 = "N/A", B29 = "N/A", B30 = "N/A", B31 = "N/A";
     if (B3 > 0 && B19 !== 0 && (B5 - B3) !== 0) {
         B27 = (B18 / B19) * B3 * (B19 - B5) / (B5 - B3);
@@ -222,13 +327,13 @@ function calc() {
         }
         // define B30 as previous total (B24) plus powder change B27 (reasonable assumption)
         if (typeof B24 === 'number' && typeof B27 === 'number') {
-            B30 = B24 + B27;
+            B30 = B18 + B27;
             if (typeof B28 === 'number') {
                 B29 = B30 - B28; // water becomes total minus powder
             } else {
                 B29 = "N/A";
             }
-            B31 = B18 + B27; // maybe total kilos after powder change (matches original)
+            B31 = B30 / B5; // maybe total kilos after powder change (matches original)
         }
     }
 
