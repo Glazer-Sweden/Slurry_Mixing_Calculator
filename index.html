@@ -12,14 +12,14 @@
  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
     <!-- <title>Calculation Sheet</title> -->
     
-	<title>Slurry_Mixing _Calculator</title>
+	<title>Slurry_Mixing_Calculator</title>
 
     <!-- <title>Slurry Calculator – Adjust Liter Weight</title> -->
 
 <!-- PWA -->
-<link rel="manifest" href="/Slurry_Mixing _Calculator/manifest.json">
+<link rel="manifest" href="/Slurry_Mixing_Calculator/manifest.json">	
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" href="/Slurry_Mixing _Calculator/icons/icon-192.png">
+<link rel="icon" href="/Slurry_Mixing_Calculator/icons/icon-192.png">
 
 <!-- Service worker registration -->
 <script>
@@ -31,7 +31,7 @@
 */
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/slurry-calculator/sw-v1.js").then(reg => {
+  navigator.serviceWorker.register("/Slurry_Mixing_Calculator/sw-v1.js").then(reg => {
     reg.onupdatefound = () => {
       const newWorker = reg.installing;
       newWorker.onstatechange = () => {
@@ -569,4 +569,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 </html>
+
 
