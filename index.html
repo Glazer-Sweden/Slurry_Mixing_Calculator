@@ -18,7 +18,7 @@
             /*grid-template-columns: 320px 140px;*/
             grid-template-columns: 300px 100px;
            /* gap: 6px 20px;*/
-            gap: 1px 1px;
+            /*gap: 1px 1px;*/
             align-items: center;
             max-width: 550px;
             background: white;
@@ -30,11 +30,11 @@
 
         .header-row1 {
             grid-column: 1 / span 2;
-            background: lightgreen;
+            background: #7FFD9F;
             color: black;
             padding: 4px 6px;
             font-size: 15px;
-         /* text-transform: uppercase; */
+   <!-- text-transform: uppercase; -->
             letter-spacing: 1px;
             margin-top: 5px;
             margin-bottom: 0px;
@@ -49,7 +49,7 @@
             color: black;
             padding: 1px 1px;
             font-size: 16px;
-         /* text-transform: uppercase; */
+   <!-- text-transform: uppercase; -->
             letter-spacing: 1px;
             margin-top: 0px;
             margin-bottom: 0px;
@@ -61,11 +61,11 @@
 
        .header-row3 {
             grid-column: 1 / span 2;
-            background: orange;
+            background: #FFA57B;
             color: black;
             padding: 1px 1px;
             font-size: 14 px;
-         /* text-transform: uppercase; */
+   <!-- text-transform: uppercase; -->
             letter-spacing: 1px;
             margin-top: 0px;
             border-radius: 8px;
@@ -76,7 +76,7 @@
         label { 
 	font-size: 14px;
 	color: black; 
-	background: #99feff;
+	background: #99FEF7;
 	 padding: 1px 5px;
          text-align: left;
          border: 1px 1px;
@@ -140,9 +140,15 @@
  </style>
 
 </head>
+
 <body>
 
-<div class="excel-grid">
+       <div align="center">
+ 
+      <div class="excel-grid">
+
+<div class="header-row1" style="font-weight: bold;">Slurry Calculations For Glazes &amp; Casting Slips</div>
+
     <div class="header-row1" style="margin-top:0;">Edit Numbers in Yellow Cells - KILOS</div>
     
     <label_input for="B3"> Powder Density (Calculations A , B , C )</label_input>
@@ -235,6 +241,8 @@
     WhatsApp: +46 739 315 028
 </div>
 
+</div>
+
 <script>
 
 // Attach one listener to the entire document
@@ -288,23 +296,55 @@ function calc() {
     const B18 = get('B18'); // Kilos casting slip or glaze
     const B19 = get('B19'); // Litres weight measured
 
-    // Calculation A
-    let B9 = "N/A", B10 = "N/A";
+ /* ======================================================== */
+
+       // Calculation A
+	let  B9 = (B8 / B3) * ((B3 - B5) / (B5 - 1));
+	let B10 = (B8 + B9) / B5;
+		if (B3 === 0) {B9 = "N/A"; B10 = "N/A"; }
+		if (B5 < 1 ) {B9 = "N/A"; B10 = "N/A"; }
+
+        // Calculation A
+  /*  let B9 = "N/A", B10 = "N/A";
     if (B3 > 0 && (B5 - 1) !== 0) {
         B9 = (B8 / B3) * ((B3 - B5) / (B5 - 1));
         B10 = (B8 + B9) / B5;
-    }
+    }*/
+
+ /* ======================================================== */
 
     // Calculation B
-    let B14 = "N/A", B15 = "N/A";
+ 
+      let  B14 = B13 * (B5 - 1) * (B3 / (B3 - 1));
+      let   B15 = (B13 * B5) - B14;
+      		if (B3 === 0) {B14 = "N/A"; B15 = "N/A"; }
+		if (B5 < 1 ) {B14 = "N/A"; B15 = "N/A"; }
+
+
+   // Calculation B
+/*    let B14 = "N/A", B15 = "N/A";
     if (B3 > 1) { // need B3 - 1 != 0
         B14 = B13 * (B5 - 1) * (B3 / (B3 - 1));
         B15 = (B13 * B5) - B14;
-    }
+    }*/
+
+ /* ======================================================== */
 
     // Calculation C - water change first (B21..B25)
     // compute in safe order: B21 -> B24 -> B22 -> B23 -> B25
-    let B21 = "N/A", B22 = "N/A", B23 = "N/A", B24 = "N/A", B25 = "N/A";
+    
+        // water to add/remove
+        let B21 = (B18 / B19) * (B19 - B5) / (B5 - 1);
+        let B24 = B18 + B21;
+	let B22 = (B18 / B19) * (B19 - 1) * (B3 / (B3 - 1));
+	let B23 = (B24 - B22);
+        let B25 = (B24 / B5);
+	  	if (B3 === 0) {B22 = "N/A"; B23 = "N/A"; }
+		if (B5 < 1 ) {B21 = "N/A"; B22 = "N/A"; B23 = "N/A"; B24 = "N/A"; B25 = "N/A"; }
+
+     // Calculation C - water change first (B21..B25)
+    // compute in safe order: B21 -> B24 -> B22 -> B23 -> B25
+ /*   let B21 = "N/A", B22 = "N/A", B23 = "N/A", B24 = "N/A", B25 = "N/A";
     if (B19 !== 0 && (B5 - 1) !== 0) {
         // water to add/remove
         B21 = (B18 / B19) * (B19 - B5) / (B5 - 1);
@@ -315,11 +355,23 @@ function calc() {
             B23 = (typeof B24 === 'number' && typeof B22 === 'number') ? (B24 - B22) : "N/A";
         }
         B25 = (typeof B24 === 'number' && B5 !== 0) ? (B24 / B5) : "N/A";
-    }
+    }  */
+
+ /* ======================================================== */
 
     // Calculation C - powder adjustment (B27..B31)
    
-    let B27 = "N/A", B28 = "N/A", B29 = "N/A", B30 = "N/A", B31 = "N/A";
+        let B27 = (B18 / B19) * B3 * (B19 - B5) / (B5 - B3);
+        let B28 = B22 + B27; // new powder total
+        let B30 = B18 + B27;
+        let B29 = B30 - B28; 
+        let B31 = B30 / B5;
+	  	if (B3 === 0) {	B27 = "N/A"; B28 = "N/A"; B30 = "N/A"; B29 = "N/A"; B31 = "N/A"; }
+	  	if (B5 < 1 ) {B27 = "N/A"; B28 = "N/A"; B30 = "N/A"; B29 = "N/A"; B31 = "N/A"; }
+
+    // Calculation C - powder adjustment (B27..B31)
+   
+/*    let B27 = "N/A", B28 = "N/A", B29 = "N/A", B30 = "N/A", B31 = "N/A";
     if (B3 > 0 && B19 !== 0 && (B5 - B3) !== 0) {
         B27 = (B18 / B19) * B3 * (B19 - B5) / (B5 - B3);
         if (typeof B22 === 'number') {
@@ -335,7 +387,9 @@ function calc() {
             }
             B31 = B30 / B5; // maybe total kilos after powder change (matches original)
         }
-    }
+    } */
+
+ /* ======================================================== */
 
     // Update UI
     set('B9', B9); set('B10', B10);
@@ -349,5 +403,6 @@ calc();
 </script>
 
 </body>
+
 
 </html>
