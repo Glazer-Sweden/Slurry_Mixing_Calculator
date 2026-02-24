@@ -368,11 +368,11 @@
           <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td>
 	</tr>
 
-        <!-- Pre-Calculation For C (not possible to weight the slurry) -->
+        <!-- Pre-Calculation For C (when it's impossible to weight the slurry) -->
 <tr style="height:15.0pt">
           <td width="404" nowrap="" colspan="2" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:#F0B64E;padding:0cm 5.4pt 0cm 5.4pt;height:10.0pt">
             <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
-              <b><span style="font-family:" liberation="" sans",="" arial,="" system-ui,="" apple-system,="" sans-serif;="" color:black"=""> Pre-Calculation For C (not possible to weigh the slurry)</span></b>
+              <b><span style="font-family:" liberation="" sans",="" arial,="" system-ui,="" apple-system,="" sans-serif;="" color:black"=""> Pre-Calculation For C (when it's impossible to weight the slurry)</span></b>
             </p>
           </td>
         </tr>
@@ -391,14 +391,14 @@ Kilos of Casting Slip or Glaze</span></b>
     <td class="input-descriptions">Litre Weight Measured</td>
     <td class="input"><span><input id="L" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
     </td>
+
 </tr>
 <!-- INPUT CELL … W … Water Added to Slurry -->
 <tr class="input">
-    <td class="input-descriptions">Add Water to Casting Slip or Glaze</td>
+    <td class="input-descriptions">Add Water to Casting Slip or Glaze Slurry</td>
     <td class="input"><span><input id="W" value="1.000" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
     </td>
 </tr>
-
 
 <!-- INPUT CELL … N … New Liter Weight Measured -->
 <tr class="input">
@@ -407,12 +407,9 @@ Kilos of Casting Slip or Glaze</span></b>
     </td>
 </tr>
 
-
 <!-- OUTPUT CELL … S … Slurry Weight -->
-<tr><td class="output-text"><span>Slurry Weight ... inc. extra water</span><button style="float: right; margin-left: 5px; margin-right: 5px; padding: 1px 5px; border: 1px solid rgb(204, 204, 204); border-radius: 10px; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
+<tr><td class="output-text"><span>Slurry Weight ... inc. water added</span><button style="float: right; margin-left: 5px; margin-right: 5px; padding: 1px 5px; border: 1px solid rgb(204, 204, 204); border-radius: 10px; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
 <td class="output-value-for-information"><span id="S">10.003</span></td></tr>
-
-
 
 
 <!-- B30 — FOOTER -->
@@ -727,6 +724,7 @@ Kilos of Casting Slip or Glaze</span></b>
   ">
     Checking for updates…
   </div>
+
 
 
 </body></html>
