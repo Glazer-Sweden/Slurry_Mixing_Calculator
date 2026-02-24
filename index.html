@@ -189,8 +189,10 @@
 	 	<td class="input"><span><input id="B5" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
 	</tr>
 
-        <tr style="height:10pt">
-          <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td></tr>
+        <tr style="height:5pt">
+          <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td>
+	</tr>
+
 <!-- Calculation A -->
         <tr style="height:15.0pt">
           <td width="404" nowrap="" colspan="2" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:#F0B64E;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt">
@@ -225,7 +227,9 @@
         <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
 <td class="output-value-for-information"><span id="B10">1.000</span></td></tr>
     
-    
+        <tr style="height:5pt">
+          <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td>
+	</tr>    
 
         <!-- B10 — Calculation B -->
         <tr style="height:15.0pt">
@@ -260,6 +264,9 @@
         <tr><td class="todo-greens1"><span>Kilos of WATER to Weigh &amp; Mix</span></td>
 <td class="todo-greens2"><span id="B15">5.040</span></td></tr>
 
+        <tr style="height:5pt">
+          <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td>
+	</tr>
 
         <!-- B15 — Calculation C -->
         <tr style="height:15.0pt">
@@ -357,8 +364,58 @@
         <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
 <td class="output-value-for-information"><span id="B31">6.606</span></td></tr>
 
+        <tr style="height:5pt">
+          <td width="404" nowrap="" colspan="2" valign="bottom" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:ghostwhite;padding:0cm 5.4pt 0cm 5.4pt;height:2.25pt"></td>
+	</tr>
 
-        <!-- B30 — FOOTER -->
+        <!-- Pre-Calculation For C (not possible to weight the slurry) -->
+<tr style="height:15.0pt">
+          <td width="404" nowrap="" colspan="2" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:#F0B64E;padding:0cm 5.4pt 0cm 5.4pt;height:10.0pt">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span style="font-family:" liberation="" sans",="" arial,="" system-ui,="" apple-system,="" sans-serif;="" color:black"=""> Pre-Calculation For C (not possible to weigh the slurry)</span></b>
+            </p>
+          </td>
+        </tr>
+
+<tr style="height:15.0pt">
+          <td width="404" nowrap="" colspan="2" style="width:303.0pt;border:solid #111111 1.0pt;border-top:none;background:#F2A068;padding:0cm 5.4pt 0cm 5.4pt;height:10.0pt">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span style="font-family:" liberation="" sans",="" "arial",="" system-ui,="" -apple-system,="" sans-serif;="" color:black"=""> Method To Verify/Determine
+Kilos of Casting Slip or Glaze</span></b>
+            </p>
+          </td>
+        </tr>
+
+<!-- INPUT CELL … L … Liter Wt. Measured -->
+<tr class="input">
+    <td class="input-descriptions">Litre Weight Measured</td>
+    <td class="input"><span><input id="L" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+<!-- INPUT CELL … W … Water Added to Slurry -->
+<tr class="input">
+    <td class="input-descriptions">Add Water to Casting Slip or Glaze</td>
+    <td class="input"><span><input id="W" value="1.000" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+
+<!-- INPUT CELL … N … New Liter Weight Measured -->
+<tr class="input">
+    <td class="input-descriptions">New Litre Weight Measured</td>
+    <td class="input"><span><input id="N" value="1.67797" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+
+<!-- OUTPUT CELL … S … Slurry Weight -->
+<tr><td class="output-text"><span>Slurry Weight ... inc. extra water</span><button style="float: right; margin-left: 5px; margin-right: 5px; padding: 1px 5px; border: 1px solid rgb(204, 204, 204); border-radius: 10px; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
+<td class="output-value-for-information"><span id="S">10.003</span></td></tr>
+
+
+
+
+<!-- B30 — FOOTER -->
         <tr style="height:45.75pt">
           <td width="404" colspan="2" style="width:303.0pt;border:solid black 1.0pt;border-top:none;background:#E2EFD9;padding:0cm 5.4pt 0cm 5.4pt;height:45.75pt">
             <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
@@ -379,7 +436,7 @@
 
   <!-- xxxxxxxxxxxxxxxxxxxxxxx END OF NEW CODE xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-  <!-- Force Update Button -->
+ <!-- Force Update Button -->
   <div style="text-align:center; margin-top:12px;">
     <button onclick="forceUpdate()" style="padding:6px 12px; font-size:0.9rem; border-radius:6px; border:1px solid #888; background:#e6e6e6;">
       Force App Update
@@ -430,6 +487,13 @@
     const B13 = get('B13'); // Litres required
     const B18 = get('B18'); // Kilos casting slip or glaze
     const B19 = get('B19'); // Litre weight measured
+
+    // For Determining Slurry Wt. When Can Not Weigh The Slurry
+
+    const L = get('L'); // Litre Weight Measured ... Before adding more water
+    const W = get('W'); // Water Added To The Slurry
+    const N = get('N'); // New Litre Weight measured ...After Extra Water Added
+   // const S = get('S'); // Slurry Weight ... After Extra Water Added
 
     /* ======================================================== */
     // Calculation A
@@ -485,6 +549,11 @@
     }
 
     /* ======================================================== */
+    // "Calculation Pre-Calculation For C (when can not weigh the slurry)"
+    // Method To Verify/Determine Kilos of Casting Slip or Glaze
+    let S = ((L * (N - 1) * W) / (L - N)) + W; // Slurry Weight At New Liter Weight
+        
+    /* ======================================================== */
     // Update UI
     set('B9',  B9);
     set('B10', B10);
@@ -500,11 +569,90 @@
     set('B29', B29);
     set('B30', B30);
     set('B31', B31);
-  }
 
+    // Update UI ... Calculation Pre-Calculation For C
+    //               Verify/Determine Kilos of Casting Slip or Glaze
+        
+   // set('L', L);
+    //set('W', W);
+    //set('N', N);
+    set('S', S);
+
+    }
+        
   // Run immediately
   calc();
   </script>
+
+<!--  Button Event -->
+    <script>
+        // Your full JavaScript code here, including finding the target cell,
+        // creating/finding the button, and adding the event listener.
+        // The part I provided would go inside this script tag.
+
+        const tdElements = document.querySelectorAll('td.output-text');
+        let targetCell = null;
+
+        for (const td of tdElements) {
+          const span = td.querySelector('span');
+          if (span && span.textContent.includes('Slurry Weight')) {
+            targetCell = td;
+            break;
+          }
+        }
+
+         if (targetCell) {
+          let button = targetCell.querySelector('button');
+
+           if (!button) {
+            button = document.createElement('button');
+            button.textContent = 'Transfer';
+            button.style.float = 'right';
+            button.style.marginLeft = '1px';
+            button.style.marginRight = '1px';
+            button.style.padding = '1px 1px';
+            button.style.border = '1px solid #ccc';
+            button.style.borderRadius = '10px';
+            button.style.backgroundColor = '#f0f0f0';
+            button.style.cursor = 'pointer'; 
+            targetCell.appendChild(button);
+          } 
+
+          // Clone and replace to ensure event listeners are cleared and re-attached correctly
+          const newButton = button.cloneNode(true);
+          button.parentNode.replaceChild(newButton, button);
+          button = newButton;
+
+          button.addEventListener('click', () => {
+            const sValue = document.getElementById('S')?.textContent;
+            const nInput = document.getElementById('N');
+            const nValue = nInput && nInput.tagName === 'INPUT' ? nInput.value : nInput?.textContent;
+
+            const b18Input = document.getElementById('B18');
+            if (b18Input && b18Input.tagName === 'INPUT') {
+              b18Input.value = sValue !== undefined ? sValue : '';
+              if (typeof b18Input.oninput === 'function') {
+                b18Input.oninput();
+              }
+            }
+
+            const b19Input = document.getElementById('B19');
+            if (b19Input && b19Input.tagName === 'INPUT') {
+              b19Input.value = nValue !== undefined ? nValue : '';
+              if (typeof b19Input.oninput === 'function') {
+                b19Input.oninput();
+              }
+            }
+            console.log(`Transferred S value: ${sValue} to B18 and N value: ${nValue} to B19`);
+          });
+
+          // No need for 'const data = { ... }' part when embedding, that was for my tool output.
+        } else {
+          console.warn("Target cell for Transfer button not found. Button not added.");
+        }
+
+    </script>
+  
 
   <script>
   function forceUpdate() {
