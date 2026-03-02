@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slurry_Mixing_Calculator</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/Slurry_Mixing_Calculator/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="/Slurry_Mixing_Calculator/icons/icon-192.png">
+
+  <!-- Service worker registration -->
+  <script>
+  /*
+    IMPORTANT:
+    - This must match the filename of your service worker.
+    - For Version 2, the file is sw-v2.js.
+    - When you release Version 2, rename to sw-v2.js and update this line.
+  */
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/Slurry_Mixing_Calculator/sw-v1.js").then(reg => {
+      reg.onupdatefound = () => {
+        const newWorker = reg.installing;
+        newWorker.onstatechange = () => {
+          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            const refresh = confirm("A new version of Slurry Calculator is available. Reload now?");
+            if (refresh) window.location.reload();
+          }
+        };
+      };
+    });
+  }
+  </script>
+
+  <!-- Page CSS -->
+
+  <style>
+
+    /* Text Styling */
+
+        /* Global box-sizing */
+        * {
+          box-sizing: border-box;
+      	}
+    
+	body {
+        font-family: "Liberation Sans", "Arial", system-ui, -apple-system, sans-serif;
+    	font-size: 13.3333px;
+    	}
+    
+    /* Table layout: keep original width but make it responsive */
+    table {
+        max-width: 393px;
+        width: 100%;
+	border:solid black 1.333px;
+    }
+
+.table-header-title-1 {
+  height: 13.333px; /* Consider using more flexible units like rem or em if appropriate */
+  background: #bae18f;
+  padding: 1.333px; /* Shorthand for padding: 0 1px; if top/bottom padding is 0 */
+  text-align: center;
+  line-height: normal;
+  padding-top: 6px;
+  padding-BOTTOM: 6px;
+  font-size: 15px; /* Consider using rem or em for better accessibility */
+  font-weight: bold; /* Moved from <b> tag */
+  white-space: nowrap; /* Replaces nowrap="" attribute */
+}
+
+.table-header-title-2 {
+  height: 13.333px;
+  background: #bae18f;
+  padding: 1.333px; /* Shorthand for padding: 0 1px; if top/bottom padding is 0 */
+  text-align: center;
+  line-height: normal;
+  padding-bottom: 4px;
+  font-size: 14px; /* Consider using rem or em for better accessibility */
+  font-weight: normal; /* Moved from <b> tag */
+  white-space: nowrap; /* Replaces nowrap="" attribute */
+}
+
+.table-header-title-3 {
+  height: 13.333px;
+  background: #bae18f;
+  padding: 1.333px; /* Shorthand for padding: 0 1px; if top/bottom padding is 0 */
+  text-align: left;
+  line-height: normal;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  font-size: 14px; /* Consider using rem or em for better accessibility */
+  font-weight: normal; /* Moved from <b> tag */
+  white-space: nowrap; /* Replaces nowrap="" attribute */
+}
+
+.table-header-title-4 {
+  height: 13.333px;
+  background: #bae18f;
+  padding: 1.333px; /* Shorthand for padding: 0 1px; if top/bottom padding is 0 */
+  text-align: center;
+  line-height: normal;
+  padding-top:4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  font-size: 15px; /* Consider using rem or em for better accessibility */
+  font-weight: bold; /* Moved from <b> tag */
+  white-space: nowrap; /* Replaces nowrap="" attribute */
+}
+
+    table td {
+        border:solid black 1.333px;
+    }
+
+    table td p {
+        margin: 0px 0px;
+    }
+
+    table td.input-descriptions {
+        background-color: yellow;
+        text-indent: 1px;
+	width: 84%;
+    }
+
+    lable {
+	width 100%;
+    }
+
+    table td.input {
+        background-color: yellow;
+    }
+
+    /* Inputs: same width, inset from borders, mobile-friendly */
+    table td input.input-cell {
+        width: auto;
+	width: 98%;
+        margin: 1px 1px;
+        background-color: yellow;
+        text-align: right;
+    }
+
+    /*Class To Do Text*/
+    .todo-greens1 {
+       background:#00FF2B;
+       padding: 4px 1px; /* Padding above & below ... then padding left & right */  
+    } 
+            
+    /*Class To Do Value*/
+    .todo-greens2 {
+        text-align: end;
+        font-variant-numeric: tabular-nums;
+        background:#00FF2B;
+        padding: 4px 1px; /* Padding above & below ... then padding left & right */
+    } 
+
+    /* Output Text Description */
+    .output-text {
+        background:#99FEFF;
+        padding: 4px 1px; /* Padding above & below ... then padding left & right */
+    }
+                
+    /* Output Value For Information */
+    .output-value-for-information {
+        text-align: end;
+        font-variant-numeric: tabular-nums;
+        background:#99FEFF;
+        padding: 4px 1px; /* Padding above & below ... then padding left & right */
+    }
+
+    /* Offline banner spacing with main content */
+    #offlineBanner {
+        width: 100%;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 393px) {
+        body {
+        font-size: 13.3333px;
+    }
+      
+    table {
+        width: 100%;
+    }
+
+td.input-descriptions label {
+    display: block;  /* Make it a block-level element */
+    width: 100%;    /* Make it take 100% of the parent td's content width */
+    height: 100%;   /* Make it take 100% of the parent td's content height */
+    box-sizing: border-box;  /* Crucial: Includes padding and border in the width/height calculation */
+    padding: 0;     /* Remove any default padding from the label if not desired */
+    margin: 0;      /* Remove any default margin from the label if not desired */
+}
+
+/* Optional: If you want spacing around the label's content, apply padding to the label itself, not the td. */
+td.input-descriptions {
+    padding: 0; /* Ensure the td has no padding, so the label can fill it completely */
+}
+
+    .transfer-button {
+      float: right;
+      margin-left: 8px;
+      margin-right: 5px;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff; /* Primary action blue */
+      color: white;
+      font-weight: bold;
+      font-size: 0.95em;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      /* Optional: Add an icon */
+      /* display: flex; */
+      /* align-items: center; */
+    }
+
+    .transfer-button:hover,
+    .transfer-button:focus {
+      background-color: #0056b3; /* Darker blue on hover/focus */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* More pronounced shadow */
+      outline: none; /* Remove default focus outline if you provide your own visual cue */
+    }
+
+    .transfer-button:active {
+      background-color: #004085; /* Even darker blue when clicked */
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Smaller shadow to simulate press */
+      transform: translateY(1px); /* Slight vertical shift */
+    }
+
+</style>
+
+</head>
+
+<body>
+  <div id="offlineBanner" align="center" style="display: none; background: rgb(255, 204, 0); padding: 3px 0px; font-size: 0.9rem; width: 393px; top: 0px;" "="" z-index:="" 9999;"="">
+    You are offline. Some features may be limited.
+  </div>
+
+<!-- xxx START OF NEW CODE xxx -->
+
+  <div align="center" class="calculator-container" style="margin-top: 0px;">
+
+    <table cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+
+   	<thead>
+    		<tr>
+      			<th colspan="2" class="table-header-title-1">
+        			Slurry Calculations - Glazes &amp; Casting Slips
+      			</th>
+    		</tr>
+		<tr>		
+      			<th colspan="2" class="table-header-title-2">
+        			Edit Numbers in Yellow Cells - KILOS
+      			</th>
+		</tr>
+		<tr>
+      			<th colspan="2" class="table-header-title-3">
+        			Step 1. Determine Powder Density if all results are needed.
+      			</th>
+		</tr>
+		<tr>
+      			<th colspan="2" class="table-header-title-3">
+        			Step 2. Enter values "Powder Density" & "Target Liter Wt".
+      			</th>
+		</tr>
+		<tr>
+      			<th colspan="2" class="table-header-title-3">
+        			Step 3. Select calculation (B-D) and proceed.
+      			</th>
+    		</tr>
+
+  	</thead>
+
+      <tbody>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:5px"></td></tr>
+
+<!-- Calculation A -->
+
+        <!-- Calculate Powder Densiy -->
+<tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span> Calculation A</span></b>
+            </p>
+          </td>
+        </tr>
+
+<tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Determine Powder Density</span></b>
+            </p>
+          </td>
+        </tr>
+
+<!-- INPUT CELL … P1 … Powder Used (Kilos) -->
+<tr class="input">
+    <td class="input-descriptions"><label for="P1">Powder Weight Used (Kilos)</label></td>
+
+    <td class="input"><span><input id="P1" value="1.296" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+
+</tr>
+<!-- INPUT CELL … W1 … Water Used (Kilos) -->
+<tr class="input">
+    <td class="input-descriptions"><label for="W1">Water Weight Used (Kilos)</label></td>
+
+    <td class="input"><span><input id="W1" value="0.504" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+<!-- INPUT CELL … L1 … Liter Weight Measured -->
+<tr class="input">
+    <td class="input-descriptions"><label for="L1">Litre Weight Measured (Kilos per Litre)</label></td>
+
+    <td class="input"><span><input id="L1" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+<!-- OUTPUT CELL … D1 … Specific Gravity (Density)  Of Powder -->
+
+    <tr>
+      <td class="output-text">
+        <span>Powder Density (Calculated)</span>
+        <button class="transfer-button">Press To Transfer</button>
+      </td>
+
+	<td class="output-value-for-information"><span id="D1">2.613</span></td></tr>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:5px"></td></tr>
+
+<!-- Input Data Needed For  B C D -->
+
+	<tr>
+      		<th colspan="2" class="table-header-title-4">
+        		Calculations B, C, D1 & D2.
+      		</th>
+    	</tr>
+
+	<tr style="height:15px">
+          	<td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+            		<p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              			<b><span>Input Powder & Target Liter Wt. For Calculations B C D</span></b>
+            		</p>
+          	</td>
+        </tr>
+
+	<tr style="height:15px">
+          	<td nowrap="" colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+            		<p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              			<b><span>Powder Density Is Optional - Delete If Unknown</span></b>
+            		</p>
+          	</td>
+        </tr>
+
+ <!-- Input Base Data -->
+
+        <!-- B3 — INPUT CELL -->
+        <tr class="input">
+		<td class="input-descriptions"><label for="B3">Powder Density, when available for B C D</label></td>
+		<td class="input"><span><input id="B3" value="2.613" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
+	</tr>
+
+        <!-- B4 — INPUT CELL … B5? -->
+        <tr for="B5" class="input">
+		<td class="input-descriptions"><label for="B5">Target Litre Weight for B C D</label></td>
+	 	<td class="input"><span><input id="B5" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
+	
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:2.5px"></td></tr>
+
+<!-- Calculation B -->
+
+        <tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:15px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Calculation B</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- Water Addition For Given Powder Weight -->
+        <tr style="height:15px">
+          <td nowrap="" colspan="2" style=";background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Water Needed For Given Powder Weight</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- B7 — INPUT CELL … B8? -->
+	<tr class="input">
+		<td class="input-descriptions"><label for="B8">Kilos of POWDER Already Weighed</label></td>
+		<td class="input"><span><input id="B8" value="1.296" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
+	</tr>
+
+        <!-- B8 — OUTPUT CELL … B9? -->
+        <tr><td class="todo-greens1"><span>Kilos of WATER to Weigh &amp; Mix</span></td>
+		<td class="todo-greens2"><span id="B9">0.504</span></td></tr>
+
+        <!-- B9 — OUTPUT CELL … B10 -->
+        <tr><td class="output-text"><span>Litres of Casting Slip or Glaze (Calculated)</span></td>
+		<td class="output-value-for-information"><span id="B10">1.000</span></td></tr>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red; height:2.5px"></td></tr>
+
+<!-- Calculation C -->
+
+        <tr style="height:15.px">
+          <td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Calculation C</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- B11 — Water & Powder For Target Slurry Volume -->
+        <tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Water &amp; Powder Needed For Given Volume</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- B12 — INPUT CELL … B13 -->
+	<tr class="input">
+   		 <td class="input-descriptions"><label for="B13">Litres Of Casting Slip/Glaze Required</label></td>
+		 <td class="input"><span><input id="B13" value="10.000" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>	</td>
+	</tr>
+
+        <!-- B13 — OUTPUT CELL … B14 -->
+        <tr><td class="todo-greens1"><span>Kilos of POWDER to Weigh &amp; Mix</span></td>
+		<td class="todo-greens2"><span id="B14">12.960</span></td></tr>
+
+        <!-- B14 — OUTPUT CELL … B15 -->
+        <tr><td class="todo-greens1"><span>Kilos of WATER to Weigh &amp; Mix</span></td>
+		<td class="todo-greens2"><span id="B15">5.040</span></td></tr>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:2.5px"></td></tr>
+
+<!-- Calculation D1 -->
+
+        <tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span> Calculation D1</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- B16 — Calculation For NEW Target Litre Weight -->
+        <tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>Water or Powder Adjustments For Target Litre Weight</span></b>
+            </p>
+          </td>
+        </tr>
+
+        <!-- B17 — INPUT CELL … B18? -->
+        <tr class="input">
+    			<td class="input-descriptions"><label for="B18">Kilos of Casting Slip or Glaze</label></td>
+          		<td class="input"><span><input id="B18" value="10.000" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    		</td>
+	</tr>
+
+        <!-- B18 — INPUT CELL … B19? -->
+        <tr class="input">
+    			<td class="input-descriptions"><label for="B19">Litre Weight Measured</label></td>
+              		<td class="input"><span><input id="B19" value="1.700" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    		</td>
+	</tr>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+
+        <!-- B19 — OUTPUT CELL … B21? -->
+        <tr><td class="todo-greens1"><span>Water to Add or Remove</span></td>
+		<td class="todo-greens2"><span id="B21">-0.735</span></td></tr>
+
+        <!-- B20 — OUTPUT CELL … B22? -->
+        <tr><td class="output-text"><span>Total Weight of Powder in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B22">6.670</span></td></tr>
+
+        <!-- B21 — OUTPUT CELL … B23? -->
+        <tr><td class="output-text"><span>Total Weight of Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B23">2.594</span></td></tr>
+
+        <!-- B22 — OUTPUT CELL … B24? -->
+        <tr><td class="output-text"><span>Total Weight of Powder + Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B24">9.265</span></td></tr>
+
+        <!-- B23 — OUTPUT CELL … B25? -->
+        <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
+		<td class="output-value-for-information"><span id="B25">5.147</span></td></tr>
+
+<!-- EMPTY LINE -->
+	<tr><td nowrap="" colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+
+        <!-- B25 — OUTPUT CELL … B27? -->
+        <tr><td class="todo-greens1"><span>Powder to Add or Remove</span></td>
+		<td class="todo-greens2"><span id="B27">1.891</span></td></tr>
+
+        <!-- B26 — OUTPUT CELL … B28? -->
+        <tr><td class="output-text"><span>Total Weight of Powder in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B28">8.561</span></td></tr>
+
+        <!-- B27 — OUTPUT CELL … B29? -->
+        <tr><td class="output-text"><span>Total Weight of Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B29">3.330</span></td></tr>
+
+        <!-- B28 — OUTPUT CELL … B30? -->
+        <tr><td class="output-text"><span>Total Weight of Powder + Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B30">11.891</span></td></tr>
+
+        <!-- B29 — OUTPUT CELL … B31? -->
+        <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
+		<td class="output-value-for-information"><span id="B31">6.606</span></td></tr>
+
+<!-- Empty Line -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:2.5px"></td></tr>
+
+<!-- Calculation D2 -->
+
+        <!-- Pre-Calculation For D2 (when it's impossible to weight the slurry) -->
+<tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span> Calculation D2</span></b>
+            </p>
+          </td>
+        </tr>
+
+<tr style="height:15px">
+          <td nowrap="" colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <b><span>When Imposible to Weigh The Slurry</span></b>
+            </p>
+          </td>
+        </tr>
+
+<!-- INPUT CELL … L … Liter Wt. Measured -->
+<tr class="input">
+    <td class="input-descriptions"><label for="L">Litre Weight Measured</label></td>
+
+    <td class="input"><span><input id="L" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+
+</tr>
+<!-- INPUT CELL … W … Water Added to Slurry -->
+<tr class="input">
+    <td class="input-descriptions"><label for="W">Add Water to Casting Slip or Glaze Slurry</label></td>
+
+    <td class="input"><span><input id="W" value="1.000" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+<!-- INPUT CELL … N … New Liter Weight Measured -->
+<tr class="input">
+    <td class="input-descriptions"><label for="N">New Litre Weight Measured</label></td>
+
+    <td class="input"><span><input id="N" value="1.678" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span>
+    </td>
+</tr>
+
+<!-- OUTPUT CELL … S … Slurry Weight -->
+
+	<tr><td class="output-text"><span>Slurry Weight ... inc. water added</span></td>   <!-- Button Code Removed -->
+	<td class="output-value-for-information"><span id="S">11.003</span></td></tr>
+
+<!-- <tr><td class="output-text"><span>Slurry Weight ... inc. water added</span><button style="float: right; margin-left: 5px; margin-right: 5px; padding: 1px 5px; border: 1px 	solid red; border-radius: 10px; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
+	<td class="output-value-for-information"><span id="S">11.003</span></td></tr> -->
+
+<!-- xxx START OF ADDITIONS xxx -->
+
+<!-- Empty Line -->
+
+	<tr><td nowrap="" colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+
+        <!-- B19 — OUTPUT CELL … B21B? -->
+        <tr><td class="todo-greens1"><span>Water to Add or Remove</span></td>
+		<td class="todo-greens2"><span id="B21B">-0.735</span></td></tr>
+
+        <!-- B20 — OUTPUT CELL … B22B? -->
+        <tr><td class="output-text"><span>Total Weight of Powder in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B22B">6.670</span></td></tr>
+
+        <!-- B21 — OUTPUT CELL … B23B? -->
+        <tr><td class="output-text"><span>Total Weight of Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B23B">2.594</span></td></tr>
+
+        <!-- B22 — OUTPUT CELL … B24B? -->
+        <tr><td class="output-text"><span>Total Weight of Powder + Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B24B">9.265</span></td></tr>
+
+        <!-- B23 — OUTPUT CELL … B25B? -->
+        <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
+		<td class="output-value-for-information"><span id="B25B">5.147</span></td></tr>
+
+<!-- EMPTY LINE -->
+	<tr><td nowrap="" colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+
+        <!-- B25 — OUTPUT CELL … B27B? -->
+        <tr><td class="todo-greens1"><span>Powder to Add or Remove</span></td>
+		<td class="todo-greens2"><span id="B27B">1.891</span></td></tr>
+
+        <!-- B26 — OUTPUT CELL … B28B? -->
+        <tr><td class="output-text"><span>Total Weight of Powder in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B28B">8.561</span></td></tr>
+
+        <!-- B27 — OUTPUT CELL … B29B? -->
+        <tr><td class="output-text"><span>Total Weight of Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B29B">3.330</span></td></tr>
+
+        <!-- B28 — OUTPUT CELL … B30B? -->
+        <tr><td class="output-text"><span>Total Weight of Powder + Water in Slurry</span></td>
+		<td class="output-value-for-information"><span id="B30B">11.891</span></td></tr>
+
+        <!-- B29 — OUTPUT CELL … B31B? -->
+        <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
+		<td class="output-value-for-information"><span id="B31B">6.606</span></td></tr>
+	
+	<!-- EMPTY LINE -->
+	<tr><td nowrap="" colspan="2" style="background:red;height:2.5px"></td></tr>
+
+<!-- xxx END OF ADDITIONS xxx -->
+
+<!-- B30 — FOOTER -->
+        <tr style="height:45.75px">
+          <td colspan="2" style="background:#E2EFD9;padding:0cm 1px 0cm 1px;height:50px">
+            <p align="center" style="margin-bottom:0cm;text-align:center;line-height:normal">
+              <span>
+                <a href="mailto:nicholas.glazer@gmail.com">
+                  <span style="color:black;text-decoration:none">nicholas.glazer@gmail.com</span>
+                </a>
+              </span>
+              <span>
+                <br>Grad.I.Ceram … IoM3<br>WhatsApp: +46 739 315 028
+              </span>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<!-- xxx END OF NEW CODE xxx -->
+
+ <!-- Force Update Button -->
+  <div style="text-align:center; margin-top:12px;">
+    <button onclick="forceUpdate()" style="padding:6px 12px; font-size:0.9rem; border-radius:6px; border:1px solid red; background:#e6e6e6;">
+      Force App Update
+    </button>
+  </div>
+
+  <!-- Version number -->
+  <div id="appVersion" style="text-align:center; font-size:0.8rem; color:#666; margin-top:10px;">Version (no SW)</div>
+
+  <script>
+
+  // Global keydown handler for comma-to-dot conversion
+  document.addEventListener('keydown', function (e) {
+    if (e.target && e.target.classList.contains('comma-convert')) {
+      if (e.key === ',' || e.keyCode === 188 || e.keyCode === 110) {
+        e.preventDefault();
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+        const value = e.target.value;
+        e.target.value = value.slice(0, start) + "." + value.slice(end);
+        e.target.selectionStart = e.target.selectionEnd = start + 1;
+      }
+    }
+  });
+
+  function calc() {
+    // helpers
+    const get = (id) => {
+      const el = document.getElementById(id);
+      if (!el) return 0;
+      const v = parseFloat(el.value);
+      return (isFinite(v) ? v : 0);
+    };
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (typeof val === 'number') {
+        if (!isFinite(val)) el.innerText = 'N/A';
+        else el.innerText = val.toFixed(3);
+      } else {
+        el.innerText = val;
+      }
+    };
+
+    // Inputs For Determining the Powder Density (D1)
+    const P1 = get('P1');     // Powder Weight
+    const W1 = get('W1');  // Water Weight
+    const L1  = get('L1');      // Liter Weight	
+
+    // Inputs
+    const B3  = get('B3');  // Powder density
+    const B5  = get('B5');  // Target litre weight
+    const B8  = get('B8');  // Kilos powder already weighed
+    const B13 = get('B13'); // Litres required
+    const B18 = get('B18'); // Kilos casting slip or glaze
+    const B19 = get('B19'); // Litre weight measured
+
+    // Inputs For Determining Slurry Wt. When Can Not Weigh The Slurry
+
+    const L = get('L'); // Litre Weight Measured ... Before adding more water
+    const W = get('W'); // Water Added To The Slurry
+    const N = get('N'); // New Litre Weight measured ...After Extra Water Added
+    
+/* ============= */
+   // Calculation A ... Density "D1"
+        let D1 = (P1 * L1) / ((P1 + W1) - (W1 * L1));   
+
+/* ============= */
+    // Calculation B
+    let B9  = (B8 / B3) * ((B3 - B5) / (B5 - 1));
+    let B10 = (B8 + B9) / B5;
+
+    if (B3 === 0) { B9 = "N/A"; B10 = "N/A"; }
+    if (B5 < 1)  { B9 = "N/A"; B10 = "N/A"; }
+
+/* ============= */
+    // Calculation C
+    let B14 = B13 * (B5 - 1) * (B3 / (B3 - 1));
+    let B15 = (B13 * B5) - B14;
+
+    if (B3 === 0) { B14 = "N/A"; B15 = "N/A"; }
+    if (B5 < 1)  { B14 = "N/A"; B15 = "N/A"; }
+
+/* ============= */
+    // Calculation D1a - water change first (B21..B25)
+    // compute in safe order: B21 -> B24 -> B22 -> B23 -> B25
+
+    // water to add/remove
+    let B21 = (B18 / B19) * (B19 - B5) / (B5 - 1);
+    let B24 = B18 + B21;
+    let B22 = (B18 / B19) * (B19 - 1) * (B3 / (B3 - 1));
+    let B23 = (B24 - B22);
+    let B25 = (B24 / B5);
+
+    if (B3 === 0) { B22 = "N/A"; B23 = "N/A"; }
+    if (B5 < 1)  { B21 = "N/A"; B22 = "N/A"; B23 = "N/A"; B24 = "N/A"; B25 = "N/A"; }
+
+/* ============= */
+    // Calculation D1b - powder adjustment (B27..B31)
+    let B27 = (B18 / B19) * B3 * (B19 - B5) / (B5 - B3);
+    let B28 = B22 + B27; // new powder total
+    let B30 = B18 + B27;
+    let B29 = B30 - B28;
+    let B31 = B30 / B5;
+
+    if (B3 === 0) {
+      B27 = "N/A";
+      B28 = "N/A";
+      B30 = "N/A";
+      B29 = "N/A";
+      B31 = "N/A";
+    }
+    if (B5 < 1) {
+      B27 = "N/A";
+      B28 = "N/A";
+      B30 = "N/A";
+      B29 = "N/A";
+      B31 = "N/A";
+    }
+
+/* ============= */
+    // "Calculation Pre-Calculation For D2 (when can not weigh the slurry)"
+    // Method To Verify/Determine Kilos of Casting Slip or Glaze
+    let S = ((L * (N - 1) * W) / (L - N)) + W; // Slurry Weight At New Liter Weight
+
+/* ============= */
+    // Calculation D2a - water change first (B21B..B25B)
+    // compute in safe order: B21B -> B24B -> B22B -> B23B -> B25B
+
+    // WATER to add/remove
+        let B21B = (S / N) * (N - B5) / (B5 - 1);
+    	let B24B = S + B21B;
+   	let B22B = (S / N) * (N - 1) * (B3 / (B3 - 1));
+   	let B23B = (B24B - B22B);
+   	let B25B = (B24B / B5);
+
+    	if (B3 === 0) { B22B = "N/A"; B23B = "N/A"; }
+   	if (B5 < 1)  { B21B = "N/A"; B22B = "N/A"; B23B = "N/A"; B24B = "N/A"; B25B = "N/A"; }
+
+/* ============= */
+    // Calculation D2b - powder adjustment (B27..B31)
+
+    // POWDER to add/remove
+    let B27B = (S / N) * B3 * (N - B5) / (B5 - B3);
+    let B28B = B22B + B27B; // new powder total
+   let B30B = S + B27B;
+    let B29B = B30B - B28B;
+    let B31B = B30B / B5;
+
+    if (B3 === 0) {
+      B27B = "N/A";
+      B28B = "N/A";
+      B30B = "N/A";
+      B29B = "N/A";
+      B31B = "N/A";
+    }
+    if (B5 < 1) {
+      B27B = "N/A";
+      B28B = "N/A";
+      B30B = "N/A";
+      B29B = "N/A";
+      B31B = "N/A";
+    }
+
+/* ============= */
+
+    	// Update UI ... Calculation Pre-Calculation For Section A
+
+    	set('D1' ,D1);		// Powder Density Calculated
+
+     	// Update UI ... Calculation Pre-Calculation For Section B
+    	set('B9',  B9);
+
+     	// Update UI ... Calculation Pre-Calculation For Section C
+    	set('B10', B10);
+    	set('B14', B14);
+    
+     	// Update UI ... Calculation Pre-Calculation For Section D1
+    	set('B15', B15);
+    	set('B21', B21);
+    	set('B22', B22);
+   	set('B23', B23);
+    	set('B24', B24);
+    	set('B25', B25);
+    	set('B27', B27);
+    	set('B28', B28);
+    	set('B29', B29);
+    	set('B30', B30);
+    	set('B31', B31);
+
+    	// Update UI ... Calculation Pre-Calculation For Section D2
+        set('S', S);       		// Calculated Slurry Weight ... After Extra Water Added
+    	set('B21B', B21B);
+    	set('B22B', B22B);
+    	set('B23B', B23B);
+    	set('B24B', B24B);
+    	set('B25B', B25B);
+    	set('B27B', B27B);
+    	set('B28B', B28B);
+    	set('B29B', B29B);
+    	set('B30B', B30B);
+    	set('B31B', B31B);
+ }
+        
+  // Run immediately
+  calc();
+  </script>
+
+<!-- Button Script -->
+
+<script>
+
+document.querySelectorAll('label[for]').forEach(label => {
+    const inputId = label.getAttribute('for');
+    const input = document.getElementById(inputId);
+
+    if (input) {
+      label.addEventListener('click', () => {
+        input.focus();
+        input.select();
+      });
+    }
+  });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Find ALL buttons and then use .find() on the resulting NodeList (converted to an Array)
+        const transferButton = Array.from(document.querySelectorAll('button'))
+                                .find(button => button.textContent.includes('Press To Transfer'));
+
+        // Find the output cell D1 (which is a SPAN)
+        const outputCellD1 = document.getElementById('D1');
+
+        // Find the input cell B3 (which is an INPUT)
+        const inputCellB3 = document.getElementById('B3');
+
+        if (transferButton && outputCellD1 && inputCellB3) {
+            transferButton.addEventListener('click', () => {
+                // Get the text content from the output SPAN element D1
+                const d1Value = outputCellD1.textContent.trim();
+
+                // Set the value of the input element B3
+                inputCellB3.value = d1Value;
+
+                // If other scripts depend on the 'input' event for B3, dispatch it
+                // For example, if B3 performs calculations when its value changes.
+                if (typeof inputCellB3.oninput === 'function') {
+                    inputCellB3.oninput();
+                } else {
+                    inputCellB3.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+
+                console.log(`Transferred D1 value: ${d1Value} to B3`);
+            });
+        } else {
+            // This console.warn will now correctly tell you if any element isn't found
+            console.warn("Could not find Transfer button, D1 output cell, or B3 input cell. Transfer functionality not enabled. Check selectors.");
+            // You can add more specific logging here to see which element is missing
+            if (!transferButton) console.warn("Transfer button not found.");
+            if (!outputCellD1) console.warn("Output cell D1 not found.");
+            if (!inputCellB3) console.warn("Input cell B3 not found.");
+        }
+    });
+</script>  
+
+  <script>
+  function forceUpdate() {
+    if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg) {
+          reg.update().then(() => {
+            location.reload(true);
+          });
+        } else {
+          location.reload(true);
+        }
+      });
+    } else {
+      location.reload(true);
+    }
+  }
+  </script>
+
+  <script>
+  function requestAppVersion() {
+    if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
+      document.getElementById("appVersion").textContent = "Version (no SW)";
+      return;
+    }
+    navigator.serviceWorker.controller.postMessage("GET_VERSION");
+    navigator.serviceWorker.addEventListener("message", event => {
+      if (event.data && event.data.version) {
+        document.getElementById("appVersion").textContent = "Version " + event.data.version;
+      }
+    });
+  }
+
+  window.addEventListener("load", requestAppVersion);
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    function updateOnlineStatus() {
+      const banner = document.getElementById("offlineBanner");
+      const container = document.querySelector(".calculator-container");
+      if (navigator.onLine) {
+        banner.style.display = "none";
+        if (container) container.style.marginTop = "0px";
+      } else {
+        banner.style.display = "block";
+        if (container) container.style.marginTop = "5px";
+      }
+    }
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    updateOnlineStatus();
+  });
+  </script>
+
+</body>
+
+</html>
