@@ -42,14 +42,24 @@
     /* -------------------------------------- */
 
     /* Global box-sizing for consistent box model behavior */
-    * {
-        box-sizing: border-box;
-    }
+    /*		* {
+        		box-sizing: border-box;
+    		} */
+
+	html {
+  		box-sizing: border-box; font-size: 14px; /* Now, 1rem will equal 13.3333px *//* Step 1: Set the root to border-box */
+	}
+
+	*,
+	*::before,
+	*::after {
+  	box-sizing: inherit; /* Step 2: Make all elements inherit this setting */
+	}
 
     /* Base body styles for typography and overall page layout */
     body {
         font-family: "Liberation Sans", "Arial", system-ui, -apple-system, sans-serif;
-        font-size: 13.3333px;
+        font-size: 1rem;
         /* These three lines of code are used to center the webpage on the computer screen */
         display: flex;
         flex-direction: column; /* Stack children vertically */
@@ -65,23 +75,18 @@
     table {
         max-width: 393px; /* Defines the max width for the table */
         width: 100%;    /* Ensures it takes full width up to max-width */
-        border: solid black 1.333px;
+        border: solid black 0.075rem;
         /* It's good practice to place table-related layout here */
     }
 
     /* Basic styling for all table data cells */
     table td {
-        border: solid black 1.333px;
+        border: solid black 0.075rem;
     }
 
     /* Reset margin for paragraphs within table cells */
     table td p {
-        margin: 0px 0px;
-    }
-
-    /* Offline banner spacing with main content */
-    #offlineBanner {
-        width: 100%;
+        margin: 0rem 0rem;
     }
 
     /* -------------------------------------- */
@@ -92,17 +97,17 @@
     /* Styles for the transfer button */
     .transfer-button {
         float: center; /* Note: 'center' is not a valid value for float. Use margin: 0 auto; with display: block; or flexbox/grid for centering. */
-        margin-left: 8px;
-        margin-right: 5px;
-        padding: 5px 12px;
+        margin-left: 0.6rem;
+        margin-right: 0.375rem;
+        padding: 0.375rem 0.90rem;
         border: none;
-        border-radius: 5px;
+        border-radius: 0.375rem;
         background-color: #007bff;  /* Primary action blue */
         color: white;
         font-weight: normal;
-        font-size: 0.8em;
+        font-size: 0.8rem;
         cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        box-shadow: 0 0.15rem 0.30rem rgba(0,0,0,0.2);
         transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -110,87 +115,89 @@
     .transfer-button:hover,
     .transfer-button:focus {
         background-color: #0056b3; /* Darker blue on hover/focus */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* More pronounced shadow */
+        box-shadow: 0 0.30rem 0.6rem rgba(0,0,0,0.3); /* More pronounced shadow */
         outline: none; /* Remove default focus outline if you provide your own visual cue */
     }
 
     .transfer-button:active {
         background-color: #004085; /* Even darker blue when clicked */
-        box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Smaller shadow to simulate press */
-        transform: translateY(1px);  /* Slight vertical shift */
+        box-shadow: 0 0.075rem 0.15rem rgba(0,0,0,0.2); /* Smaller shadow to simulate press */
+        transform: translateY(0.075rem);  /* Slight vertical shift */
     }
 
     /* Styles for various table header titles */
     .table-header-title-1 {
-        height: 13.333px;
+        height: 1rem;
         background: #bae18f;
         text-align: center;
         line-height: normal;
-        padding-top: 6px;
-        padding-BOTTOM: 2px;
-        font-size: 15px;
+        padding-top: 0.45rem;
+        padding-BOTTOM: 0.15rem;
+        font-size: 1.2rem;
         font-weight: bold;
         white-space: nowrap;
     }
 
     .table-header-title-2 {
-        height: 13.333px;
+        height: 1rem;
         background: #bae18f;
         text-align: center;
         line-height: normal;
-        padding-top: 0px;
-        padding-bottom: 2px;
-        font-size: 14px;
+        padding-top: 0rem;
+        padding-bottom: 0.15rem;
+        font-size: 1.1rem;
         font-weight: normal;
         white-space: nowrap;
     }
 
     .table-header-title-3 {
-        height: 13.333px;
+        height: 1rem;
         background: #bae18f;
-        padding: 1.333px;
+        padding: 0.1;
         text-align: center;
         line-height: normal;
-        padding-top: 2px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        font-size: 14px;
+        padding-top: 0.15rem;
+        padding-bottom: 0rem;
+        padding-left: 0rem;
+        font-size: 1.1rem;
         font-weight: normal;
         white-space: nowrap;
     }
 
     .table-header-title-4 {
-        height: 13.333px;
+        height: 1rem;
         background: #bae18f;
         text-align: center;
         line-height: normal;
-        padding-top: 0px;
-        padding-bottom: 2px;
-        padding-left: 0px;
-        padding-right: 0px;
-        font-size: 14px;
+        padding-top: 0rem;
+        padding-bottom: 0.15rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        font-size: 1.1rem;
         font-weight: normal;
         white-space: nowrap;
     }
 
     .table-header-title-5 {
-        height: 13.333px;
+        height: 1rem;
         text-align: center;
         line-height: normal;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        padding-left: 0px;
-        padding-right: 0px;
-        font-size: 12px;
+        padding-top: 0.15rem;
+        padding-bottom: 0.15rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        font-size: 0.9rem;
         font-weight: normal;
         white-space: nowrap;
         background-color: lightgray;
     }
 
     /* Styles for specific table data cells and inputs */
+
     table td.input-descriptions {
         background-color: yellow;
-        text-indent: 1px;
+        /* text-indent: 0.075rem; */
+	padding: 0.30rem 0 0.30rem 0.375rem;
         width: 84%;
     }
 
@@ -201,7 +208,7 @@
     table td input.input-cell {
         width: auto; /* Good to have a default */
         width: 98%; /* More specific, overrides 'auto' */
-        margin: 1px 1px;
+        margin: 0.075rem 0.075rem;
         background-color: yellow;
         text-align: right;
     }
@@ -209,7 +216,7 @@
     /*Class To Do Text*/
     .todo-greens1 {
         background: #00FF2B;
-        padding: 4px 1px;
+       padding: 0.30rem 0 0.30rem 0.375rem;
     }
 
     /*Class To Do Value*/
@@ -217,13 +224,15 @@
         text-align: end;
         font-variant-numeric: tabular-nums;
         background: #00FF2B;
-        padding: 4px 1px;
+        /* padding: 0.30rem 0.075rem; */
+	padding: 0.30rem 0.225rem 0.30rem 0rem;
     }
 
     /* Output Text Description */
     .output-text {
         background: #99FEFF;
-        padding: 4px 1px;
+        /* padding: 0.30rem 0.075rem; */
+	padding: 0.30rem 0 0.30rem 0.375rem;
     }
 
     /* Output Value For Information */
@@ -231,7 +240,8 @@
         text-align: end;
         font-variant-numeric: tabular-nums;
         background: #99FEFF;
-        padding: 4px 1px;
+        /* padding: 0.30rem 0.075rem; */
+	padding: 0.30rem 0.225rem 0.30rem 0rem;
     }
 
     /* Styles for labels within input descriptions */
@@ -257,10 +267,17 @@
     /*    (Responsive adjustments)            */
     /* -------------------------------------- */
 
-    /* Mobile tweaks (styles that only apply below 393px) */
+
+    /* Offline banner spacing with main content */
+    #offlineBanner {
+        /* width: 100%; */
+	/* width: 393px */
+    }
+
+/* Mobile tweaks (styles that only apply below 393px) */
     @media (max-width: 393px) {
         body {
-            font-size: 13.3333px;
+            font-size: 1rem;
         }
 
         /* The general 'table { width: 100%; }' is already defined,
@@ -287,17 +304,17 @@
 
 <body>
 
-<div id="offlineBanner" style="display: none; text-align:center; background: rgb(255, 204, 0); padding: 3px 0px; font-size: 0.9rem; width: 100%; top: 0px; z-index:9999; position: fixed;">
-  You are offline. Some features may be limited.
+<div id="offlineBanner" style="display: block; text-align: center; background: rgb(255, 204, 0); padding: 0rem; font-size: 1.15rem; top: 0.75rem; z-index: 9999; position: initial; border: 0.15rem solid red; right: 0rem;">
+  You are offline ...  Some features may be limited.
 </div>
 
- <!--  <div id="offlineBanner" style="display: none; text-align:center; background: rgb(255, 204, 0); padding: 3px 0px; font-size: 0.9rem; width: 393px; top: 0px; z-index:9999;">
-    You are offline. Some features may be limited. -->
+ <!--  <div id="offlineBanner" style="display: none; text-align:center; background: rgb(255, 204, 0); padding: 0.225rem 0rem; font-size: 0.9rem; width: 393px; top: 0rem; z-index:9999;">
+    You are offline ... Some features may be limited. -->
   </div>
 
 <!-- xxx START OF NEW CODE xxx -->
 
-  <div class="calculator-container" style="margin-top: 0px;">  <!-- The ... align="center" ... moves the webpage to the center of the screen -->
+  <div class="calculator-container" style="margin-top: 0rem;">  <!-- The ... align="center" ... moves the webpage to the center of the screen -->
 
     <table style="border-collapse:collapse;">
     <!-- <table style="border-collapse:collapse; cellspacing:0; cellpadding:0;"> -->
@@ -315,7 +332,7 @@
 		</tr>
 
 <!-- Empty Line -->
-		<tr><td colspan="2" style="background:white;height:20px"></td></tr>
+		<tr><td colspan="2" style="background:white;height:1.5rem"></td></tr>
 
 <!-- Input Base Data Needed For  A B C D -->
 		<tr>
@@ -335,28 +352,29 @@
 
         <!-- B4 — INPUT CELL … B5? -->
         <tr class="input">
-		<td class="input-descriptions"><label for="B5">Target Litre Weight for Calculations A B C D</label></td>
+		<td class="input-descriptions"><label for="B5">Target Litre Weight<br>(Needed for all Calculations)</label></td>
 	 	<td class="input"><span><input id="B5" value="1.800" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
 	</tr>
 
         <!-- B3 — INPUT CELL -->
         <tr class="input">
-		<td class="input-descriptions"><label for="B3">Powder Density, when available for A B C D</label></td>
+		<!-- <td class="input-descriptions"><label for="B3">Powder Density<br>(Needed for Calculation A and B<br>&nbsp;Not necessary for calculations C and D)</label></td> -->
+		<td class="input-descriptions"><label for="B3">Powder Density<br>(Needed for Calculation A and B<br>&nbsp;&nbsp;Not necessary for Calculation C and D)</label></td>
 		<td class="input"><span><input id="B3" value="2.613" type="text" inputmode="decimal" class="comma-convert input-cell" oninput="calc()"></span> </td>
-	</tr>
+	</tr>  
 
 		<tr>
 			<th colspan="2" class="table-header-title-5">
         			If you do not know the Powder Density, use Calculation E
       			</th>
 		</tr>
-	
+
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:white;height:20px"></td></tr>
+	<tr><td colspan="2" style="background:white;height:1.5rem"></td></tr>
 
 		<tr>
       			<th colspan="2" class="table-header-title-3">
-        			STEP 2
+        			STEP 2            
       			</th>
 		</tr>
 		<tr>
@@ -364,14 +382,14 @@
         			Choose between calculation A, B, C or D.
       			</th>
 		</tr>
-	
+
 <!-- Empty Line -->
-	<!-- <tr><td colspan="2" style="background:white;height:10px"></td></tr> -->
+	<!-- <tr><td colspan="2" style="background:white;height:0.75rem"></td></tr> -->
 
 <!-- Calculation A -->
 
-        <tr style="height:15px">
-          <td colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:15px">
+        <tr style="height:1.125rem">
+          <td colspan="2" style="background:#F0B64E;padding:0cm 0.075rem 0rem 0.075rem;height:1.125rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Calculation A</span></b>
             </p>
@@ -379,8 +397,8 @@
         </tr>
 
         <!-- Water Addition For Given Powder Weight -->
-        <tr style="height:15px">
-          <td colspan="2" style=";background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+        <tr style="height:1.125rem">
+          <td colspan="2" style=";background:#F2A068;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Water Needed For Given Powder Weight</span></b>
             </p>
@@ -402,12 +420,12 @@
 		<td class="output-value-for-information"><span id="B10">1.000</span></td></tr>
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:white;height:10px"></td></tr>
+	<tr><td colspan="2" style="background:white;height:0.75rem"></td></tr>
 
 <!-- Calculation B -->
 
-        <tr style="height:15px">
-          <td colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+        <tr style="height:1.125rem">
+          <td colspan="2" style="background:#F0B64E;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Calculation B</span></b>
             </p>
@@ -415,8 +433,8 @@
         </tr>
 
         <!-- B11 — Water & Powder For Target Slurry Volume -->
-        <tr style="height:15px">
-          <td colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;">
+        <tr style="height:1.125rem">
+          <td colspan="2" style="background:#F2A068;padding:0cm 0.075rem 0rem 0.075rem;">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Water &amp; Powder Needed For Given Volume</span></b>
             </p>
@@ -438,12 +456,12 @@
 		<td class="todo-greens2"><span id="B15">5.040</span></td></tr>
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:white;height:10px"></td></tr>
+	<tr><td colspan="2" style="background:white;height:0.75rem"></td></tr>
 
 <!-- Calculation C -->
 
-        <tr style="height:15px">
-          <td colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+        <tr style="height:1.125rem">
+          <td colspan="2" style="background:#F0B64E;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span> Calculation C</span></b>
             </p>
@@ -451,8 +469,8 @@
         </tr>
 
         <!-- B16 — Calculation For NEW Target Litre Weight -->
-        <tr style="height:15px">
-          <td colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+        <tr style="height:1.125rem">
+          <td colspan="2" style="background:#F2A068;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p  style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Water or Powder Adjustments For Target Litre Weight</span></b>
             </p>
@@ -474,7 +492,7 @@
 	</tr>
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+	<tr><td colspan="2" style="background:#F0B64E;height:0.188rem"></td></tr>
 
         <!-- B19 — OUTPUT CELL … B21? -->
         <tr><td class="todo-greens1"><span>Water to Add or Remove</span></td>
@@ -497,7 +515,7 @@
 		<td class="output-value-for-information"><span id="B25">5.147</span></td></tr>
 
 <!-- EMPTY LINE -->
-	<tr><td colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+	<tr><td colspan="2" style="background:#F0B64E;height:0.188rem"></td></tr>
 
         <!-- B25 — OUTPUT CELL … B27? -->
         <tr><td class="todo-greens1"><span>Powder to Add or Remove</span></td>
@@ -520,23 +538,23 @@
 		<td class="output-value-for-information"><span id="B31">6.606</span></td></tr>
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:white;height:10px"></td></tr>
+	<tr><td colspan="2" style="background:white;height:0.75rem"></td></tr>
 
 <!-- Calculation D -->
 
         <!-- Pre-Calculation For D (when it's impossible to weight the slurry) -->
-<tr style="height:15px">
-          <td colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+<tr style="height:1.125rem">
+          <td colspan="2" style="background:#F0B64E;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span> Calculation D</span></b>
             </p>
           </td>
         </tr>
 
-<tr style="height:15px">
-          <td colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+<tr style="height:1.125rem">
+          <td colspan="2" style="background:#F2A068;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
-              <b><span>When Imposible to Weigh The Slurry</span></b>
+              <b><span>When Imposible To Weigh The Slurry</span></b>
             </p>
           </td>
         </tr>
@@ -570,13 +588,13 @@
 	<tr><td class="output-text"><span>Slurry Weight ... inc. water added</span></td>   <!-- Button Code Removed -->
 	<td class="output-value-for-information"><span id="S">11.003</span></td></tr>
 
-<!-- <tr><td class="output-text"><span>Slurry Weight ... inc. water added</span><button style="float: right; margin-left: 5px; margin-right: 5px; padding: 1px 5px; border: 1px; solid white; border-radius: 10px; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
+<!-- <tr><td class="output-text"><span>Slurry Weight ... inc. water added</span><button style="float: right; margin-left: 0.375rem; margin-right: 0.375rem; padding: 0.075rem 0.375rem; border: 0.075rem; solid white; border-radius: 0.75rem; background-color: yellow; cursor: pointer;">Transfer to C</button></td>
 	<td class="output-value-for-information"><span id="S">11.003</span></td></tr> -->
 
 <!-- xxx START OF ADDITIONS xxx -->
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+	<tr><td colspan="2" style="background:#F0B64E;height:0.188rem"></td></tr>
 
         <!-- B19 — OUTPUT CELL … B21B? -->
         <tr><td class="todo-greens1"><span>Water to Add or Remove</span></td>
@@ -599,7 +617,7 @@
 		<td class="output-value-for-information"><span id="B25B">5.147</span></td></tr>
 
 <!-- EMPTY LINE -->
-	<tr><td colspan="2" style="background:#F0B64E;height:2.5px"></td></tr>
+	<tr><td colspan="2" style="background:#F0B64E;height:0.188rem"></td></tr>
 
         <!-- B25 — OUTPUT CELL … B27B? -->
         <tr><td class="todo-greens1"><span>Powder to Add or Remove</span></td>
@@ -620,24 +638,24 @@
         <!-- B29 — OUTPUT CELL … B31B? -->
         <tr><td class="output-text"><span>Litres of Casting Slip or Glaze</span></td>
 		<td class="output-value-for-information"><span id="B31B">6.606</span></td></tr>
-	
+
 	<!-- EMPTY LINE -->
-	<tr><td colspan="2" style="background:white;height:10px"></td></tr>
+	<tr><td colspan="2" style="background:white;height:0.75rem"></td></tr>
 
 <!-- xxx END OF ADDITIONS xxx -->
 
 <!-- Calculation E ... Calculate Powder Densiy -->
 
-<tr style="height:15px">
-          <td colspan="2" style="background:#F0B64E;padding:0cm 1px 0cm 1px;height:10px">
+<tr style="height:1.125rem">
+          <td colspan="2" style="background:#F0B64E;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span> Calculation E</span></b>
             </p>
           </td>
         </tr>
 
-<tr style="height:15px">
-          <td colspan="2" style="background:#F2A068;padding:0cm 1px 0cm 1px;height:10px">
+<tr style="height:1.125rem">
+          <td colspan="2" style="background:#F2A068;padding:0cm 0.075rem 0rem 0.075rem;height:0.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <b><span>Determine Powder Density</span></b>
             </p>
@@ -679,15 +697,15 @@
         <!-- <button class="transfer-button" style="float:right;">Press To Transfer</button> -->
       </td>
 
-	<td class="output-value-for-information" style="text-align: center; font-weight: normal;"><span id="D1">2.613</span></td>
+	<td class="output-value-for-information" style="text-align: center; padding: 0rem 0rem;"><span id="D1">2.613</span></td>
 	<!-- <td class="output-value-for-information"><span id="D1">2.613</span></td></tr> -->
 
 <!-- Empty Line -->
-	<tr><td colspan="2" style="background:white;height:10px;"></td></tr>
+	<tr><td colspan="2" style="background:white;height:0.75rem;"></td></tr>
 
 <!-- B30 — FOOTER -->
-        <tr style="height:45.75px">
-          <td colspan="2" style="background:#E2EFD9;padding:0cm 1px 0cm 1px;height:50px">
+        <tr style="height:3.431rem">
+          <td colspan="2" style="background:#E2EFD9;padding:0cm 0.075rem 0rem 0.075rem;height:3.75rem">
             <p style="margin-bottom:0cm;text-align:center;line-height:normal">
               <span>
                 <a href="mailto:nicholas.glazer@gmail.com">
@@ -707,14 +725,14 @@
 <!-- xxx END OF NEW CODE xxx -->
 
  <!-- Force Update Button -->
-  <div style="text-align:center; margin-top:12px;">
-    <button onclick="forceUpdate()" style="padding:3px 6px; font-size:0.8rem; border-radius:6px; border:1px solid black; background:#e6e6e6;">
+  <div style="text-align:center; margin-top:0.9rem;">
+    <button onclick="forceUpdate()" style="padding:0.225rem 0.45rem; font-size:0.8rem; border-radius:0.45rem; border:0.075rem solid black; background:#e6e6e6;">
       Force App Update
     </button>
   </div>
 
   <!-- Version number -->
-  <div id="appVersion" style="text-align:center; font-size:0.8rem; color:#666; margin-top:10px;">Version (no SW)</div>
+  <div id="appVersion" style="text-align:center; font-size:0.8rem; color:#666; margin-top:0.75rem;">Version (no SW)</div>
 
   <script>
 
@@ -769,7 +787,7 @@
     const L = get('L'); // Litre Weight Measured ... Before adding more water
     const W = get('W'); // Water Added To The Slurry
     const N = get('N'); // New Litre Weight measured ...After Extra Water Added
-    
+
 /* ============= */
     // Calculation A
     let B9  = (B8 / B3) * ((B3 - B5) / (B5 - 1));
@@ -879,7 +897,7 @@
      	// Update UI ... Calculation B
     	set('B10', B10);
     	set('B14', B14);
-    
+
      	// Update UI ... Calculation C
     	set('B15', B15);
     	set('B21', B21);
@@ -909,7 +927,7 @@
     	// Update UI ... Calculation E
     	set('D1' ,D1);		// Powder Density Calculated
  }
-        
+
   // Run immediately
   calc();
   </script>
@@ -959,7 +977,7 @@ document.querySelectorAll('label[for]').forEach(label => {
 
                 // console.log(`Transferwhite D1 value: ${d1Value} to B3`);
 		console.log(`Transferred D1 value: ${d1Value} to B3`);
-		
+
             });
         } else {
             // This console.warn will now correctly tell you if any element isn't found
@@ -1017,7 +1035,7 @@ document.querySelectorAll('label[for]').forEach(label => {
       if (navigator.onLine) {
         banner.style.display = "none";
         if (container) {
-          container.style.marginTop = "0px";
+          container.style.marginTop = "0rem";
         }
       } else {
         banner.style.display = "block";
@@ -1041,10 +1059,10 @@ document.querySelectorAll('label[for]').forEach(label => {
       const container = document.querySelector(".calculator-container");
       if (navigator.onLine) {
         banner.style.display = "none";
-        if (container) container.style.marginTop = "0px";
+        if (container) container.style.marginTop = "0rem";
       } else {
         banner.style.display = "block";
-        if (container) container.style.marginTop = "5px";
+        if (container) container.style.marginTop = "0.375rem";
       }
     }
 
@@ -1053,7 +1071,7 @@ document.querySelectorAll('label[for]').forEach(label => {
 
     updateOnlineStatus();
   }); */
-  
+
 		</script>
 	</body>
 </html>
